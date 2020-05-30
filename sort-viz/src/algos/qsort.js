@@ -21,16 +21,20 @@ export default function(nums, l, r) {
                 [nums[anchor], nums[i]] = [nums[i], nums[anchor]];
                 animationNums.push({
                     nums: nums.slice(),
-                    swap: { [anchor]: true, [i]: true },
+                    pointers: { [anchor]: true, [i]: true },
                 });
             }
+            animationNums.push({
+                nums: nums.slice(),
+                pointers: { [i]: true },
+            });
         }
 
         // swap val @ anchor + 1 and r
         [nums[anchor + 1], nums[r]] = [nums[r], nums[anchor + 1]];
         animationNums.push({
             nums: nums.slice(),
-            swap: { [anchor + 1]: true, [r]: true },
+            pointers: { [anchor + 1]: true, [r]: true },
         });
 
         return anchor + 1;
