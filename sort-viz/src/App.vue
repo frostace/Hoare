@@ -1,28 +1,65 @@
 <template>
     <div id="app">
-        <BarChart :inputNums="initNums" msg="Welcome to Your Vue.js App" />
+        <div class="header-section">
+            <!-- internal signal of a click would call handleClick method -->
+            <Button @click="handleClickReset" content="Reset" />
+            <Button @click="handleClickStart" content="Start" />
+            <RangeSlider sliderID="arrayLength" @change="handleRangeSet" content="Array Length" />
+            <RangeSlider
+                sliderID="animationDuration"
+                @change="handleRangeSet"
+                content="Animation Speed"
+            />
+        </div>
+        <BarChart :inputNums="getInitNums" ref="barChart" />
     </div>
 </template>
 
 <script>
 import BarChart from "./components/BarChart.vue";
+import Button from "./components/Button";
+import RangeSlider from "./components/RangeSlider";
+import { mapGetters, mapActions } from "vuex";
 
 export default {
     name: "App",
     components: {
-        BarChart
-    },
-    data() {
-        return {
-            initNums: this.genRandomArray(50, 50)
-        };
-    },
-    methods: {
-        genRandomArray: (length, max) =>
-            [...new Array(length)].map(() => Math.ceil(Math.random() * max))
+        BarChart,
+        Button,
+        RangeSlider
     },
     created() {
         document.title = "Sorting Visualization";
+        this.resetInitNums();
+    },
+    computed: mapGetters(["getInitNums"]),
+    data() {
+        return {};
+    },
+    methods: {
+        ...mapActions([
+            "resetInitNums",
+            "toggleChartBusy",
+            "varyArrayLength",
+            "varyAnimationDuration"
+        ]),
+        handleClickReset() {
+            this.resetInitNums();
+            this.$refs.barChart.resetAllCharts();
+        },
+        handleClickStart() {
+            this.toggleChartBusy();
+            this.$refs.barChart.startAnimation();
+        },
+        handleRangeSet(evt) {
+            if (evt.target.id === "arrayLength") {
+                this.varyArrayLength(evt.target.value);
+                this.handleClickReset();
+            }
+            if (evt.target.id === "animationDuration") {
+                this.varyAnimationDuration(evt.target.value);
+            }
+        }
     }
 };
 </script>
@@ -43,5 +80,12 @@ $chart-bkg-color: #f4f4f4;
 
 body {
     background-color: $chart-bkg-color;
+}
+
+.header-section {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
 }
 </style>
