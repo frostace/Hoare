@@ -1,10 +1,15 @@
 import Vue from "vue";
 import Vuex from "vuex";
+import * as d3 from "d3";
 
 Vue.use(Vuex);
 
 var genRandomArray = (length, max) =>
     [...new Array(length)].map(() => Math.ceil(Math.random() * max));
+
+// var activateSlider = () => {
+//     d3.selectAll("input").property("disabled", false);
+// };
 
 const state = {
     initNums: [],
@@ -29,7 +34,7 @@ const actions = {
     resetInitNums({ commit }) {
         commit("updateInitNums");
     },
-    toggleChartBusy({ commit }) {
+    makeChartBusy({ commit }) {
         commit("updateChartBusy");
     },
     varyArrayLength({ commit }, newLength) {
@@ -57,6 +62,7 @@ const mutations = {
     },
     updateChartBusy: (state) => {
         state.chartIsBusy = !state.chartIsBusy;
+        d3.selectAll("input").property("disabled", true);
     },
     updateArrayLength: (state, newLength) => {
         state.arrayLength = newLength * 2 + 4;
@@ -90,6 +96,7 @@ const mutations = {
             state.mergesortFinished &&
             state.insertionsortFinished
         );
+        console.log("busy", state.chartIsBusy);
         console.log("insertsion fin");
     },
 };

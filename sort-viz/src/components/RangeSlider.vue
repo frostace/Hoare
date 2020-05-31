@@ -18,23 +18,23 @@ export default {
     props: {
         content: {
             type: String,
-            default: "",
+            default: ""
         },
         sliderID: {
             type: String,
-            default: "vol",
-        },
+            default: "vol"
+        }
     },
     data() {
         return {
-            currentValue: 23,
+            currentValue: 23
         };
     },
     methods: {
         handleChange(evt) {
             this.$emit("change", evt);
-        },
-    },
+        }
+    }
 };
 </script>
 
@@ -62,6 +62,11 @@ span {
     opacity: 0.7;
     -webkit-transition: 0.2s;
     transition: opacity 0.2s;
+    &:disabled {
+        &::-webkit-slider-thumb {
+            background: #d3d3d3;
+        }
+    }
 }
 
 .slider:hover {
@@ -85,4 +90,10 @@ span {
     background: $--decent-blue;
     cursor: pointer;
 }
+
+// input[type="range"]:disabled {
+//     &::-webkit-slider-thumb {
+//         background: red;
+//     }
+// }
 </style>

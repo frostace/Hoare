@@ -26,6 +26,7 @@ import BarChart from "./components/BarChart.vue";
 import Button from "./components/Button";
 import RangeSlider from "./components/RangeSlider";
 import { mapGetters, mapActions } from "vuex";
+import * as d3 from "d3";
 
 export default {
     name: "App",
@@ -45,16 +46,18 @@ export default {
     methods: {
         ...mapActions([
             "resetInitNums",
-            "toggleChartBusy",
+            "makeChartBusy",
             "varyArrayLength",
             "varyAnimationDuration"
         ]),
         handleClickReset() {
             this.resetInitNums();
             this.$refs.barChart.resetAllCharts();
+            d3.selectAll("#arrayLength").attr("disabled", null);
+            d3.selectAll("#animationDuration").attr("disabled", null);
         },
         handleClickStart() {
-            this.toggleChartBusy();
+            this.makeChartBusy();
             this.$refs.barChart.startAnimation();
         },
         handleRangeSet(evt) {
