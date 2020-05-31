@@ -35,14 +35,14 @@ export default {
             animationNumsQuickSort: [],
             animationNumsMergeSort: [],
             animationNumsInsertionSort: [],
-            iterNum: 0,
+            iterNum: 0
         };
     },
     computed: mapGetters([
         "getInitNums",
         "getChartBusy",
         "getInitNumsMax",
-        "getAnimationDuration",
+        "getAnimationDuration"
     ]),
     // watch: {
     //     nums: {
@@ -62,7 +62,7 @@ export default {
         ...mapActions([
             "releaseQsort",
             "releaseMergeSort",
-            "releaseInsertionSort",
+            "releaseInsertionSort"
         ]),
         /**
          * A linear interpolator for hexadecimal colors
@@ -180,7 +180,7 @@ export default {
                 .attr("y", (g, idx) => xScale(idx + 1))
                 .attr("rx", xScale.bandwidth() / 3)
                 .attr("height", xScale.bandwidth())
-                .attr("width", (g) => yScale(g))
+                .attr("width", g => yScale(g))
                 .attr("fill", (g, idx) =>
                     swapIndices === null
                         ? this.lerpColor(g / arrayMax)
@@ -319,8 +319,8 @@ export default {
                     this.releaseInsertionSort();
                 } else return;
             }, lengthInsertionSortAnima * this.getAnimationDuration);
-        }, // end of startAnimation
-    }, // end of methods
+        } // end of startAnimation
+    } // end of methods
 };
 </script>
 
@@ -344,14 +344,15 @@ svg {
 
 .section {
     p {
-        position: absolute;
+        position: relative;
         color: #888;
         writing-mode: vertical-rl;
-        transform: translate(10px, 63px) rotate(-180deg);
-        -ms-transform: translate(10px, 63px) rotate(-180deg);
-        -o-transform: translate(10px, 63px) rotate(-180deg);
-        -moz-transform: translate(10px, 63px) rotate(-180deg);
-        -webkit-transform: translate(10px, 63px) rotate(-180deg);
+        transform: translate(30px, 63px) rotate(-180deg);
+        -ms-transform: translate(30px, 63px) rotate(-180deg);
+        -o-transform: translate(30px, 63px) rotate(-180deg);
+        -moz-transform: translate(30px, 63px) rotate(-180deg);
+        -webkit-transform: translate(30px, 63px) rotate(-180deg);
+        transform-origin: bottom left;
     }
 }
 
