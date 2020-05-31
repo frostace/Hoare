@@ -1,5 +1,5 @@
 <template>
-    <div @change="handleChange" class="slider-container">
+    <div @input="handleChange" class="slider-container">
         <span>{{ content }}</span>
         <input
             type="range"
