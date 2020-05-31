@@ -329,7 +329,7 @@ export default {
 
 #canvas {
     background-color: $chart-bkg-color;
-    height: 600px;
+    // height: 600px;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -342,7 +342,6 @@ svg {
 }
 
 .section {
-    display: inline-block;
     p {
         position: relative;
         color: #888;
@@ -370,9 +369,9 @@ svg {
             display: inline-block;
             transform: translate(25%, 0) rotate(90deg);
             -webkit-transform: translate(25%, 0) rotate(90deg);
-            -moz-transform: rotate(90deg);
-            -o-transform: rotate(90deg);
-            -ms-transform: rotate(90deg);
+            -moz-transform: translate(25%, 0) rotate(90deg);
+            -o-transform: translate(25%, 0) rotate(90deg);
+            -ms-transform: translate(25%, 0) rotate(90deg);
             margin-bottom: -60%;
             p {
                 -moz-transform: translate(10px, 33px) rotate(-180deg);
