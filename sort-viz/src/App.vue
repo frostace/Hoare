@@ -2,10 +2,26 @@
     <div id="app">
         <div class="header-section">
             <!-- internal signal of a click would call handleClick method -->
-            <Button @click="handleClickStart" content="Start" />
-            <Button @click="handleClickReset" content="Reset" />
-            <RangeSlider sliderID="arrayLength" @change="handleRangeSet" content="Array Length" />
+            <Button
+                id="button-play"
+                @click="handleClickStart"
+                iconName="play"
+                content="Start"
+            />
+            <Button
+                id="button-redo"
+                @click="handleClickReset"
+                iconName="redo"
+                content="Reset"
+            />
             <RangeSlider
+                id="slider-length"
+                sliderID="arrayLength"
+                @change="handleRangeSet"
+                content="Array Length"
+            />
+            <RangeSlider
+                id="slider-speed"
                 sliderID="animationDuration"
                 @change="handleRangeSet"
                 content="Animation Speed"
@@ -26,7 +42,7 @@ export default {
     components: {
         BarChart,
         Button,
-        RangeSlider
+        RangeSlider,
     },
     created() {
         document.title = "Sorting Visualization";
@@ -41,7 +57,7 @@ export default {
             "resetInitNums",
             "toggleChartBusy",
             "varyArrayLength",
-            "varyAnimationDuration"
+            "varyAnimationDuration",
         ]),
         handleClickReset() {
             this.resetInitNums();
@@ -59,8 +75,8 @@ export default {
             if (evt.target.id === "animationDuration") {
                 this.varyAnimationDuration(evt.target.value);
             }
-        }
-    }
+        },
+    },
 };
 </script>
 
@@ -92,5 +108,56 @@ body {
 
 #app {
     padding: 0 20px;
+}
+
+/* default is desktop: */
+/* =================== */
+
+/* =================== */
+/* === responsive ==== */
+/* =================== */
+
+@media only screen and (max-width: 375px) {
+    /* For mobile: */
+    .header-section {
+        display: grid;
+        grid-template-areas:
+            "button1 button2"
+            "slider1 slider1"
+            "slider2 slider2";
+        grid-gap: 1rem 0;
+        padding: 0px 30px 0 30px;
+    }
+
+    #button-play {
+        grid-area: button1;
+    }
+
+    #button-redo {
+        grid-area: button2;
+    }
+
+    #slider-length {
+        grid-area: slider1;
+    }
+
+    #slider-speed {
+        grid-area: slider2;
+    }
+
+    #slider-length.slider-container,
+    #slider-speed.slider-container {
+        justify-content: space-between;
+    }
+
+    #app {
+        padding: 3vw;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    /* For tablets: */
+    * {
+    }
 }
 </style>

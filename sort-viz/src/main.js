@@ -1,15 +1,16 @@
 import Vue from "vue";
 import App from "./App.vue";
-import ECharts from "vue-echarts"; // refers to components/ECharts.vue in webpack
 
-// import ECharts modules manually to reduce bundle size
-import "echarts/lib/chart/bar";
-import "echarts/lib/component/tooltip";
-import store from './store'
+import store from "./store";
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { faPlay, faRedo } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
+library.add(faPlay, faRedo);
+
+Vue.component("font-awesome-icon", FontAwesomeIcon);
 Vue.config.productionTip = false;
-Vue.component("v-chart", ECharts);
 new Vue({
     store,
-    render: (h) => h(App)
+    render: (h) => h(App),
 }).$mount("#app");

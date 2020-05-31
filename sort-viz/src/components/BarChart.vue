@@ -35,14 +35,14 @@ export default {
             animationNumsQuickSort: [],
             animationNumsMergeSort: [],
             animationNumsInsertionSort: [],
-            iterNum: 0
+            iterNum: 0,
         };
     },
     computed: mapGetters([
         "getInitNums",
         "getChartBusy",
         "getInitNumsMax",
-        "getAnimationDuration"
+        "getAnimationDuration",
     ]),
     // watch: {
     //     nums: {
@@ -62,7 +62,7 @@ export default {
         ...mapActions([
             "releaseQsort",
             "releaseMergeSort",
-            "releaseInsertionSort"
+            "releaseInsertionSort",
         ]),
         /**
          * A linear interpolator for hexadecimal colors
@@ -114,9 +114,10 @@ export default {
         },
         renderChart(nums, swapIndices = null, selector = "svg") {
             // Chart will be drawn here
-            const margin = 60;
-            const svg_width = 300;
-            const svg_height = 600;
+            const body_width = d3.select("body")._groups[0][0].clientWidth;
+            const svg_width = body_width > 375 ? 300 : 150;
+            const svg_height = svg_width * 2;
+            const margin = svg_width / 5;
             const chart_width = svg_width - 2 * margin;
             const chart_height = svg_height - 2 * margin;
             const arrayMax = this.getInitNumsMax;
@@ -179,7 +180,7 @@ export default {
                 .attr("y", (g, idx) => xScale(idx + 1))
                 .attr("rx", xScale.bandwidth() / 3)
                 .attr("height", xScale.bandwidth())
-                .attr("width", g => yScale(g))
+                .attr("width", (g) => yScale(g))
                 .attr("fill", (g, idx) =>
                     swapIndices === null
                         ? this.lerpColor(g / arrayMax)
@@ -318,8 +319,8 @@ export default {
                     this.releaseInsertionSort();
                 } else return;
             }, lengthInsertionSortAnima * this.getAnimationDuration);
-        } // end of startAnimation
-    } // end of methods
+        }, // end of startAnimation
+    }, // end of methods
 };
 </script>
 
@@ -330,13 +331,14 @@ export default {
     background-color: $chart-bkg-color;
     height: 600px;
     display: flex;
+    -webkit-display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
 }
 
 svg {
-    display: block;
+    -webkit-display: block;
     height: 100%;
 }
 
@@ -346,6 +348,40 @@ svg {
         color: #888;
         writing-mode: vertical-rl;
         transform: translate(10px, 63px) rotate(-180deg);
+        -ms-transform: translate(10px, 63px) rotate(-180deg);
+        -o-transform: translate(10px, 63px) rotate(-180deg);
+        -moz-transform: translate(10px, 63px) rotate(-180deg);
+        -webkit-transform: translate(10px, 63px) rotate(-180deg);
+    }
+}
+
+@media only screen and (max-width: 375px) {
+    /* For mobile: */
+    #canvas {
+        display: flex;
+        -webkit-display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 400px;
+        .section {
+            flex: 1;
+            display: inline-block;
+            -webkit-display: inline-block;
+            transform: rotate(90deg);
+            -webkit-transform: rotate(90deg);
+            -moz-transform: rotate(90deg);
+            -o-transform: rotate(90deg);
+            -ms-transform: rotate(90deg);
+            margin-bottom: -50%;
+            p {
+                -moz-transform: translate(-10px, 33px) rotate(-180deg);
+                -ms-transform: translate(-10px, 33px) rotate(-180deg);
+                -webkit-transform: translate(-10px, 33px) rotate(-180deg);
+                -o-transform: translate(-10px, 33px) rotate(-180deg);
+                transform: translate(-10px, 33px) rotate(-180deg);
+            }
+        }
     }
 }
 </style>

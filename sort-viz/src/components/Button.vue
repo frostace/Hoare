@@ -17,13 +17,13 @@
             },
         ]"
     >
+        <font-awesome-icon :icon="iconName" />
         <i class="dc-icon-loading" v-if="loading"></i>
         <i :class="icon" v-if="icon && !loading"></i>
         <span v-if="$slots.default">
             <slot></slot>
         </span>
-        {{ content }}
-        <font-awesome-icon v-if="circle" :icon="iconName" size="x" />
+        <span>{{ content }}</span>
     </button>
 </template>
 
@@ -32,29 +32,29 @@ export default {
     name: "dc-button",
     inject: {
         elForm: {
-            default: ""
+            default: "",
         },
         elFormItem: {
-            default: ""
-        }
+            default: "",
+        },
     },
     props: {
         type: {
             type: String,
-            default: "default"
+            default: "default",
         },
         content: {
             type: String,
-            default: "button"
+            default: "button",
         },
         size: String,
         icon: {
             type: String,
-            default: ""
+            default: "",
         },
         nativeType: {
             type: String,
-            default: "button"
+            default: "button",
         },
         loading: Boolean,
         disabled: Boolean,
@@ -62,7 +62,7 @@ export default {
         autofocus: Boolean,
         round: Boolean,
         circle: Boolean,
-        iconName: String
+        iconName: String,
     },
     computed: {
         _elFormItemSize() {
@@ -75,13 +75,13 @@ export default {
         },
         buttonDisabled() {
             return this.disabled || (this.elForm || {}).disabled;
-        }
+        },
     },
     methods: {
         handleClick(evt) {
             this.$emit("click", evt);
-        }
-    }
+        },
+    },
 };
 </script>
 
@@ -104,11 +104,14 @@ export default {
     outline: none;
     margin: 0;
     padding: 12px 20px;
-    font-size: 12px;
-    font-weight: 500;
+    // font-size: 12px;
+    font-weight: 550;
     border-radius: 20px;
     transition: 0.1s;
 
+    &:hover {
+        background-color: lighten($--slider-gray, 10%);
+    }
     &:active {
         background-color: $--decent-blue;
         color: white;
@@ -154,5 +157,9 @@ export default {
 .is-circle {
     border-radius: 30px;
     padding: 12px;
+}
+
+span {
+    margin-left: 7px;
 }
 </style>

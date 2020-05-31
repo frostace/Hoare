@@ -1,6 +1,6 @@
 <template>
     <div @change="handleChange" class="slider-container">
-        <span>{{content}}</span>
+        <span>{{ content }}</span>
         <input
             type="range"
             :id="sliderID"
@@ -18,27 +18,27 @@ export default {
     props: {
         content: {
             type: String,
-            default: ""
+            default: "",
         },
         sliderID: {
             type: String,
-            default: "vol"
-        }
+            default: "vol",
+        },
     },
     data() {
         return {
-            currentValue: 23
+            currentValue: 23,
         };
     },
     methods: {
         handleChange(evt) {
             this.$emit("change", evt);
-        }
-    }
+        },
+    },
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 @import "../assets/var";
 
 .slider-container {
@@ -50,11 +50,12 @@ export default {
 span {
     margin: 0 10px;
     color: $--content-font-color;
+    font-size: 16px;
 }
 .slider {
     -webkit-appearance: none;
     width: 100px;
-    height: 10px;
+    height: 6.68px;
     background: #d3d3d3;
     border-radius: 10px;
     outline: none;
