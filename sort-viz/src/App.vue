@@ -2,8 +2,8 @@
     <div id="app">
         <div class="header-section">
             <!-- internal signal of a click would call handleClick method -->
-            <Button @click="handleClickReset" content="Reset" />
             <Button @click="handleClickStart" content="Start" />
+            <Button @click="handleClickReset" content="Reset" />
             <RangeSlider sliderID="arrayLength" @change="handleRangeSet" content="Array Length" />
             <RangeSlider
                 sliderID="animationDuration"
@@ -87,5 +87,10 @@ body {
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+    padding: 0 60px;
+}
+
+#app {
+    padding: 0 20px;
 }
 </style>

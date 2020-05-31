@@ -97,21 +97,21 @@ export default {
     background: $--button-default-background-color;
     border: none;
     border-color: $--button-default-border-color;
-    color: $--button-default-font-color;
+    color: $--decent-blue;
     -webkit-appearance: none;
     text-align: center;
     box-sizing: border-box;
     outline: none;
     margin: 0;
-    margin-left: 10px;
     padding: 12px 20px;
     font-size: 12px;
     font-weight: 500;
-    border-radius: 4px;
+    border-radius: 20px;
     transition: 0.1s;
 
-    &:hover {
-        background-color: $--theme-color;
+    &:active {
+        background-color: $--decent-blue;
+        color: white;
     }
 }
 
@@ -149,9 +149,6 @@ export default {
 
 .is-round {
     border-radius: 30px;
-    // &:hover {
-    //     color: red;
-    // }
 }
 
 .is-circle {
