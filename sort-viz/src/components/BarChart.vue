@@ -115,7 +115,7 @@ export default {
         renderChart(nums, swapIndices = null, selector = "svg") {
             // Chart will be drawn here
             const body_width = d3.select("body")._groups[0][0].clientWidth;
-            const svg_width = body_width > 375 ? 300 : 150;
+            const svg_width = body_width > 450 ? 300 : 150;
             const svg_height = svg_width * 2;
             const margin = svg_width / 5;
             const chart_width = svg_width - 2 * margin;
@@ -331,7 +331,6 @@ export default {
     background-color: $chart-bkg-color;
     height: 600px;
     display: flex;
-    -webkit-display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
@@ -343,6 +342,7 @@ svg {
 }
 
 .section {
+    display: inline-block;
     p {
         position: relative;
         color: #888;
@@ -356,7 +356,7 @@ svg {
     }
 }
 
-@media only screen and (max-width: 375px) {
+@media only screen and (max-width: 450px) {
     /* For mobile: */
     #canvas {
         display: flex;
@@ -368,19 +368,18 @@ svg {
         .section {
             flex: 1;
             display: inline-block;
-            -webkit-display: inline-block;
-            transform: rotate(90deg);
-            -webkit-transform: rotate(90deg);
+            transform: translate(25%, 0) rotate(90deg);
+            -webkit-transform: translate(25%, 0) rotate(90deg);
             -moz-transform: rotate(90deg);
             -o-transform: rotate(90deg);
             -ms-transform: rotate(90deg);
-            margin-bottom: -50%;
+            margin-bottom: -60%;
             p {
-                -moz-transform: translate(-10px, 33px) rotate(-180deg);
-                -ms-transform: translate(-10px, 33px) rotate(-180deg);
-                -webkit-transform: translate(-10px, 33px) rotate(-180deg);
-                -o-transform: translate(-10px, 33px) rotate(-180deg);
-                transform: translate(-10px, 33px) rotate(-180deg);
+                -moz-transform: translate(10px, 33px) rotate(-180deg);
+                -ms-transform: translate(10px, 33px) rotate(-180deg);
+                -webkit-transform: translate(10px, 33px) rotate(-180deg);
+                -o-transform: translate(10px, 33px) rotate(-180deg);
+                transform: translate(10px, 33px) rotate(-180deg);
             }
         }
     }

@@ -2,18 +2,8 @@
     <div id="app">
         <div class="header-section">
             <!-- internal signal of a click would call handleClick method -->
-            <Button
-                id="button-play"
-                @click="handleClickStart"
-                iconName="play"
-                content="Start"
-            />
-            <Button
-                id="button-redo"
-                @click="handleClickReset"
-                iconName="redo"
-                content="Reset"
-            />
+            <Button id="button-play" @click="handleClickStart" iconName="play" content="Start" />
+            <Button id="button-redo" @click="handleClickReset" iconName="redo" content="Reset" />
             <RangeSlider
                 id="slider-length"
                 sliderID="arrayLength"
@@ -42,7 +32,7 @@ export default {
     components: {
         BarChart,
         Button,
-        RangeSlider,
+        RangeSlider
     },
     created() {
         document.title = "Sorting Visualization";
@@ -57,7 +47,7 @@ export default {
             "resetInitNums",
             "toggleChartBusy",
             "varyArrayLength",
-            "varyAnimationDuration",
+            "varyAnimationDuration"
         ]),
         handleClickReset() {
             this.resetInitNums();
@@ -75,8 +65,8 @@ export default {
             if (evt.target.id === "animationDuration") {
                 this.varyAnimationDuration(evt.target.value);
             }
-        },
-    },
+        }
+    }
 };
 </script>
 
@@ -117,7 +107,7 @@ body {
 /* === responsive ==== */
 /* =================== */
 
-@media only screen and (max-width: 375px) {
+@media only screen and (max-width: 450px) {
     /* For mobile: */
     .header-section {
         display: grid;
