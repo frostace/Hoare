@@ -1,6 +1,6 @@
 import Vue from "vue";
 import Vuex from "vuex";
-import * as d3 from "d3";
+// import * as d3 from "d3";
 
 Vue.use(Vuex);
 
@@ -61,12 +61,10 @@ const mutations = {
         state.chartIsBusy = false;
     },
     updateChartBusy: (state) => {
-        state.chartIsBusy = !state.chartIsBusy;
-        d3.selectAll("input").property("disabled", true);
+        state.chartIsBusy = true;
     },
     updateArrayLength: (state, newLength) => {
         state.arrayLength = newLength * 2 + 4;
-        console.log(state.initNums);
     },
     updateAnimationDuration: (state, newDuration) => {
         state.animationDuration = 146 - 2 * newDuration;
@@ -74,29 +72,20 @@ const mutations = {
     finishQsort: (state) => {
         state.qsortFinished = true;
         state.chartIsBusy = !(
-            state.qsortFinished &&
-            state.mergesortFinished &&
-            state.insertionsortFinished
+            state.mergesortFinished && state.insertionsortFinished
         );
         console.log("qsort fin");
     },
     finishMergeSort: (state) => {
         state.mergesortFinished = true;
         state.chartIsBusy = !(
-            state.qsortFinished &&
-            state.mergesortFinished &&
-            state.insertionsortFinished
+            state.qsortFinished && state.insertionsortFinished
         );
         console.log("mergesort fin");
     },
     finishInsertionSort: (state) => {
-        state.insertsionsortFinished = true;
-        state.chartIsBusy = !(
-            state.qsortFinished &&
-            state.mergesortFinished &&
-            state.insertionsortFinished
-        );
-        console.log("busy", state.chartIsBusy);
+        state.insertionsortFinished = true;
+        state.chartIsBusy = !(state.qsortFinished && state.mergesortFinished);
         console.log("insertsion fin");
     },
 };

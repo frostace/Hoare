@@ -35,14 +35,14 @@ export default {
             animationNumsQuickSort: [],
             animationNumsMergeSort: [],
             animationNumsInsertionSort: [],
-            iterNum: 0
+            iterNum: 0,
         };
     },
     computed: mapGetters([
         "getInitNums",
         "getChartBusy",
         "getInitNumsMax",
-        "getAnimationDuration"
+        "getAnimationDuration",
     ]),
     // watch: {
     //     nums: {
@@ -62,7 +62,7 @@ export default {
         ...mapActions([
             "releaseQsort",
             "releaseMergeSort",
-            "releaseInsertionSort"
+            "releaseInsertionSort",
         ]),
         /**
          * A linear interpolator for hexadecimal colors
@@ -104,8 +104,6 @@ export default {
             this.renderChart(this.getInitNums, null, "#qsort");
             this.renderChart(this.getInitNums, null, "#mergesort");
             this.renderChart(this.getInitNums, null, "#insertionsort");
-            console.log(this.getInitNums);
-            console.log("all charts reset");
         },
         resetAllAnimations() {
             this.animationNumsQuickSort = [];
@@ -180,7 +178,7 @@ export default {
                 .attr("y", (g, idx) => xScale(idx + 1))
                 .attr("rx", xScale.bandwidth() / 3)
                 .attr("height", xScale.bandwidth())
-                .attr("width", g => yScale(g))
+                .attr("width", (g) => yScale(g))
                 .attr("fill", (g, idx) =>
                     swapIndices === null
                         ? this.lerpColor(g / arrayMax)
@@ -319,8 +317,8 @@ export default {
                     this.releaseInsertionSort();
                 } else return;
             }, lengthInsertionSortAnima * this.getAnimationDuration);
-        } // end of startAnimation
-    } // end of methods
+        }, // end of startAnimation
+    }, // end of methods
 };
 </script>
 

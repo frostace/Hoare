@@ -2,8 +2,18 @@
     <div id="app">
         <div class="header-section">
             <!-- internal signal of a click would call handleClick method -->
-            <Button id="button-play" @click="handleClickStart" iconName="play" content="Start" />
-            <Button id="button-redo" @click="handleClickReset" iconName="redo" content="Reset" />
+            <Button
+                id="button-play"
+                @click="handleClickStart"
+                iconName="play"
+                content="Start"
+            />
+            <Button
+                id="button-redo"
+                @click="handleClickReset"
+                iconName="redo"
+                content="Reset"
+            />
             <RangeSlider
                 id="slider-length"
                 sliderID="arrayLength"
@@ -33,28 +43,37 @@ export default {
     components: {
         BarChart,
         Button,
-        RangeSlider
+        RangeSlider,
     },
     created() {
         document.title = "Sorting Visualization";
         this.resetInitNums();
     },
-    computed: mapGetters(["getInitNums"]),
+    computed: mapGetters(["getInitNums", "getChartBusy"]),
     data() {
         return {};
+    },
+    watch: {
+        getChartBusy(newValue) {
+            console.log("watcher of getChartBusy: ", newValue);
+            if (newValue === false) {
+                d3.selectAll("#arrayLength").attr("disabled", null);
+                d3.selectAll("#animationDuration").attr("disabled", null);
+            } else {
+                d3.selectAll("input").property("disabled", true);
+            }
+        },
     },
     methods: {
         ...mapActions([
             "resetInitNums",
             "makeChartBusy",
             "varyArrayLength",
-            "varyAnimationDuration"
+            "varyAnimationDuration",
         ]),
         handleClickReset() {
             this.resetInitNums();
             this.$refs.barChart.resetAllCharts();
-            d3.selectAll("#arrayLength").attr("disabled", null);
-            d3.selectAll("#animationDuration").attr("disabled", null);
         },
         handleClickStart() {
             this.makeChartBusy();
@@ -68,8 +87,8 @@ export default {
             if (evt.target.id === "animationDuration") {
                 this.varyAnimationDuration(evt.target.value);
             }
-        }
-    }
+        },
+    },
 };
 </script>
 
