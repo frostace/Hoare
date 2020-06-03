@@ -334,22 +334,37 @@ export default {
     align-items: center;
 }
 
-svg {
-    -webkit-display: block;
-    height: 100%;
-}
-
 .section {
+    &:first-child p {
+        transform: translate(-47px, 48px) rotate(-90deg);
+        -ms-transform: translate(-47px, 48px) rotate(-90deg);
+        -o-transform: translate(-47px, 48px) rotate(-90deg);
+        -moz-transform: translate(-47px, 48px) rotate(-90deg);
+        -webkit-transform: translate(-47px, 48px) rotate(-90deg);
+    }
+    &:last-child p {
+        transform: translate(-66px, 48px) rotate(-90deg);
+        -ms-transform: translate(-66px, 48px) rotate(-90deg);
+        -o-transform: translate(-66px, 48px) rotate(-90deg);
+        -moz-transform: translate(-66px, 48px) rotate(-90deg);
+        -webkit-transform: translate(-66px, 48px) rotate(-90deg);
+    }
     p {
-        position: relative;
+        position: absolute; // cannot make position relative here, or the svg's cannot be aligned
+        font-size: 16px;
         color: #888;
-        writing-mode: vertical-rl;
-        transform: translate(30px, 63px) rotate(-180deg);
-        -ms-transform: translate(30px, 63px) rotate(-180deg);
-        -o-transform: translate(30px, 63px) rotate(-180deg);
-        -moz-transform: translate(30px, 63px) rotate(-180deg);
-        -webkit-transform: translate(30px, 63px) rotate(-180deg);
-        transform-origin: bottom left;
+        // writing-mode: vertical-rl;
+        transform: translate(-52px, 48px) rotate(-90deg);
+        -ms-transform: translate(-52px, 48px) rotate(-90deg);
+        -o-transform: translate(-52px, 48px) rotate(-90deg);
+        -moz-transform: translate(-52px, 48px) rotate(-90deg);
+        -webkit-transform: translate(-52px, 48px) rotate(-90deg);
+        transform-origin: top right;
+    }
+    svg {
+        -webkit-display: block;
+        display: block;
+        height: 100%;
     }
 }
 

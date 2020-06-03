@@ -92,7 +92,9 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss">
+$chart-bkg-color: #f4f4f4;
+
 #app {
     font-family: Avenir, Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
@@ -100,11 +102,8 @@ export default {
     text-align: center;
     color: #2c3e50;
     margin-top: 60px;
+    padding: 0 20px;
 }
-</style>
-
-<style lang="scss">
-$chart-bkg-color: #f4f4f4;
 
 body {
     background-color: $chart-bkg-color;
@@ -116,10 +115,6 @@ body {
     justify-content: space-between;
     align-items: center;
     padding: 0 60px;
-}
-
-#app {
-    padding: 0 20px;
 }
 
 /* default is desktop: */
