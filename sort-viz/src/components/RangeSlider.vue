@@ -6,8 +6,8 @@
             :id="sliderID"
             class="slider"
             name="vol"
-            min="0"
-            max="46"
+            min="4"
+            max="50"
             :value="currentValue"
         />
     </div>
@@ -18,23 +18,23 @@ export default {
     props: {
         content: {
             type: String,
-            default: ""
+            default: "",
         },
         sliderID: {
             type: String,
-            default: "vol"
-        }
+            default: "vol",
+        },
     },
     data() {
         return {
-            currentValue: 23
+            currentValue: 25,
         };
     },
     methods: {
         handleChange(evt) {
             this.$emit("change", evt);
-        }
-    }
+        },
+    },
 };
 </script>
 

@@ -14,7 +14,7 @@ var genRandomArray = (length, max) =>
 const state = {
     initNums: [],
     initNumsMax: 0, // maintain a fixed maximum value of nums so that merge sort won't change domain range dynamically
-    animationDuration: 100, // default
+    animationDuration: 80, // default
     arrayLength: 50, // default
     chartIsBusy: false,
     qsortFinished: false,
@@ -62,12 +62,17 @@ const mutations = {
     },
     updateChartBusy: (state) => {
         state.chartIsBusy = true;
+        state.qsortFinished = false;
+        state.mergesortFinished = false;
+        state.insertionsortFinished = false;
     },
     updateArrayLength: (state, newLength) => {
-        state.arrayLength = newLength * 2 + 4;
+        state.arrayLength = newLength * 2;
+        // default length = 25 * 2 = 50;
     },
     updateAnimationDuration: (state, newDuration) => {
-        state.animationDuration = 146 - 2 * newDuration;
+        state.animationDuration = 144 - 2.56 * newDuration;
+        // default animation duration = 144 - 2.56 * 25 = 80ms;
     },
     finishQsort: (state) => {
         state.qsortFinished = true;
@@ -86,7 +91,11 @@ const mutations = {
     finishInsertionSort: (state) => {
         state.insertionsortFinished = true;
         state.chartIsBusy = !(state.qsortFinished && state.mergesortFinished);
-        console.log("insertsion fin");
+        console.log(
+            "insertsion fin",
+            state.qsortFinished,
+            state.mergesortFinished
+        );
     },
 };
 
