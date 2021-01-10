@@ -20,14 +20,16 @@ const state = {
     qsortFinished: false,
     mergesortFinished: false,
     insertionsortFinished: false,
+    selectedAlgorithms: ["Quick Sort", "Merge Sort", "Insertion Sort"]
 };
 
 const getters = {
-    getInitNums: (state) => state.initNums,
-    getInitNumsMax: (state) => state.initNumsMax,
-    getChartBusy: (state) => state.chartIsBusy,
-    getArrayLength: (state) => state.arrayLength,
-    getAnimationDuration: (state) => state.animationDuration,
+    getInitNums: state => state.initNums,
+    getInitNumsMax: state => state.initNumsMax,
+    getChartBusy: state => state.chartIsBusy,
+    getArrayLength: state => state.arrayLength,
+    getAnimationDuration: state => state.animationDuration,
+    getSelectedAlgorithms: state => state.selectedAlgorithms
 };
 
 const actions = {
@@ -43,6 +45,9 @@ const actions = {
     varyAnimationDuration({ commit }, newDuration) {
         commit("updateAnimationDuration", newDuration);
     },
+    varyAlgorithms({ commit }, newAlgos) {
+        commit("updateAlgorithms", newAlgos);
+    },
     releaseQsort({ commit }) {
         commit("finishQsort");
     },
@@ -51,16 +56,16 @@ const actions = {
     },
     releaseInsertionSort({ commit }) {
         commit("finishInsertionSort");
-    },
+    }
 };
 
 const mutations = {
-    updateInitNums: (state) => {
+    updateInitNums: state => {
         state.initNums = genRandomArray(state.arrayLength, 50);
         state.initNumsMax = Math.max(...state.initNums);
         state.chartIsBusy = false;
     },
-    updateChartBusy: (state) => {
+    updateChartBusy: state => {
         state.chartIsBusy = true;
         state.qsortFinished = false;
         state.mergesortFinished = false;
@@ -74,21 +79,24 @@ const mutations = {
         state.animationDuration = 144 - 2.56 * newDuration;
         // default animation duration = 144 - 2.56 * 25 = 80ms;
     },
-    finishQsort: (state) => {
+    updateAlgorithms: (state, newAlgos) => {
+        state.selectedAlgorithms = newAlgos;
+    },
+    finishQsort: state => {
         state.qsortFinished = true;
         state.chartIsBusy = !(
             state.mergesortFinished && state.insertionsortFinished
         );
         console.log("qsort fin");
     },
-    finishMergeSort: (state) => {
+    finishMergeSort: state => {
         state.mergesortFinished = true;
         state.chartIsBusy = !(
             state.qsortFinished && state.insertionsortFinished
         );
         console.log("mergesort fin");
     },
-    finishInsertionSort: (state) => {
+    finishInsertionSort: state => {
         state.insertionsortFinished = true;
         state.chartIsBusy = !(state.qsortFinished && state.mergesortFinished);
         console.log(
@@ -96,7 +104,7 @@ const mutations = {
             state.qsortFinished,
             state.mergesortFinished
         );
-    },
+    }
 };
 
 export default new Vuex.Store({
@@ -104,5 +112,5 @@ export default new Vuex.Store({
     getters,
     mutations,
     actions,
-    modules: {},
+    modules: {}
 });

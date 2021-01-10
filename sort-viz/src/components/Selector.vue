@@ -5,12 +5,16 @@
             mode="multiple"
             :size="size"
             placeholder="Please select"
-            :default-value="['Quick Sort', 'Merge Sort']"
+            :default-value="getSelectedAlgorithms"
             style="width: 260px"
             @change="handleChange"
             @popupScroll="popupScroll"
         >
-            <a-select-option v-for="method in methods" :key="method">
+            <a-select-option
+                v-for="method in methods"
+                :key="method"
+                :disabled="algoFull && !getSelectedAlgorithms.includes(method)"
+            >
                 {{ method }}
             </a-select-option>
         </a-select>
@@ -18,6 +22,8 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from "vuex";
+
 export default {
     data() {
         return {
@@ -31,9 +37,17 @@ export default {
             ]
         };
     },
+    computed: {
+        ...mapGetters(["getSelectedAlgorithms"]),
+        algoFull() {
+            return this.getSelectedAlgorithms.length >= 3;
+        }
+    },
     methods: {
+        ...mapActions(["varyAlgorithms"]),
         handleChange(value) {
             console.log(`Selected: ${value}`);
+            this.varyAlgorithms(value);
         },
         popupScroll() {
             console.log("popupScroll");
