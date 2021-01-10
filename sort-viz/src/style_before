@@ -1,0 +1,40 @@
+element.style {
+}
+<style>
+.section:first-child p[data-v-22e0623b] {
+    transform: translate(-47px, 48px) rotate(-90deg);
+    -ms-transform: translate(-47px, 48px) rotate(-90deg);
+    -o-transform: translate(-47px, 48px) rotate(-90deg);
+    -moz-transform: translate(-47px, 48px) rotate(-90deg);
+    -webkit-transform: translate(-47px, 48px) rotate(-90deg);
+}
+<style>
+.section p[data-v-22e0623b] {
+    position: absolute;
+    font-size: 16px;
+    color: #888;
+    transform: translate(-52px, 48px) rotate(-90deg);
+    -ms-transform: translate(-52px, 48px) rotate(-90deg);
+    -o-transform: translate(-52px, 48px) rotate(-90deg);
+    -moz-transform: translate(-52px, 48px) rotate(-90deg);
+    -webkit-transform: translate(-52px, 48px) rotate(-90deg);
+    transform-origin: top right;
+}
+user agent stylesheet
+p {
+    display: block;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+}
+<style>
+#app {
+    font-family: Avenir, Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-align: center;
+    color: #2c3e50;
+    margin-top: 60px;
+    padding: 0 20px;
+}

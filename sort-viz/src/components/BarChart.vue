@@ -21,7 +21,7 @@ import * as d3 from "d3";
 import qsort from "../algos/qsort";
 import mergesort from "../algos/mergesort";
 import insertionsort from "../algos/insertionsort";
-import shellsort from "../algos/shellsort";
+// import shellsort from "../algos/shellsort";
 import { mapGetters, mapActions } from "vuex";
 // import { start } from "repl";
 
@@ -37,14 +37,14 @@ export default {
             animationNumsQuickSort: [],
             animationNumsMergeSort: [],
             animationNumsInsertionSort: [],
-            iterNum: 0,
+            iterNum: 0
         };
     },
     computed: mapGetters([
         "getInitNums",
         "getChartBusy",
         "getInitNumsMax",
-        "getAnimationDuration",
+        "getAnimationDuration"
     ]),
     // watch: {
     //     nums: {
@@ -64,7 +64,7 @@ export default {
         ...mapActions([
             "releaseQsort",
             "releaseMergeSort",
-            "releaseInsertionSort",
+            "releaseInsertionSort"
         ]),
         /**
          * A linear interpolator for hexadecimal colors
@@ -180,7 +180,7 @@ export default {
                 .attr("y", (g, idx) => xScale(idx + 1))
                 .attr("rx", xScale.bandwidth() / 3)
                 .attr("height", xScale.bandwidth())
-                .attr("width", (g) => yScale(g))
+                .attr("width", g => yScale(g))
                 .attr("fill", (g, idx) =>
                     swapIndices === null
                         ? this.lerpColor(g / arrayMax)
@@ -227,7 +227,7 @@ export default {
                     this.releaseQsort();
                 } else return;
             };
-            const qsortFrame = (timestamp) => {
+            const qsortFrame = timestamp => {
                 // base case
                 if (this.animationNumsQuickSort.length === 0) {
                     window.requestAnimationFrame(qsortLastFrame);
@@ -306,7 +306,7 @@ export default {
                     this.releaseMergeSort();
                 } else return;
             };
-            const mergeSortFrame = (timestamp) => {
+            const mergeSortFrame = timestamp => {
                 // base case
                 if (this.animationNumsMergeSort.length === 0) {
                     window.requestAnimationFrame(mergeSortLastFrame);
@@ -396,7 +396,7 @@ export default {
                     this.releaseInsertionSort();
                 } else return;
             };
-            const insertionSortFrame = (timestamp) => {
+            const insertionSortFrame = timestamp => {
                 // base case
                 if (this.animationNumsInsertionSort.length === 0) {
                     window.requestAnimationFrame(insertionSortLastFrame);
@@ -465,8 +465,8 @@ export default {
             //         this.releaseInsertionSort();
             //     } else return;
             // }, lengthInsertionSortAnima * this.getAnimationDuration);
-        }, // end of startAnimation
-    }, // end of methods
+        } // end of startAnimation
+    } // end of methods
 };
 </script>
 
@@ -480,6 +480,10 @@ export default {
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+}
+
+p {
+    margin-top: 15px;
 }
 
 .section {

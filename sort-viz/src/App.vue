@@ -14,6 +14,7 @@
                 iconName="redo"
                 content="Reset"
             />
+            <Selector />
             <RangeSlider
                 id="slider-length"
                 sliderID="arrayLength"
@@ -35,6 +36,7 @@
 import BarChart from "./components/BarChart.vue";
 import Button from "./components/Button";
 import RangeSlider from "./components/RangeSlider";
+import Selector from "./components/Selector";
 import { mapGetters, mapActions } from "vuex";
 import * as d3 from "d3";
 
@@ -44,9 +46,10 @@ export default {
         BarChart,
         Button,
         RangeSlider,
+        Selector
     },
     created() {
-        document.title = "Sorting Visualization";
+        document.title = "Hoare";
         this.resetInitNums();
     },
     computed: mapGetters(["getInitNums", "getChartBusy"]),
@@ -62,14 +65,14 @@ export default {
             } else {
                 d3.selectAll("input").property("disabled", true);
             }
-        },
+        }
     },
     methods: {
         ...mapActions([
             "resetInitNums",
             "makeChartBusy",
             "varyArrayLength",
-            "varyAnimationDuration",
+            "varyAnimationDuration"
         ]),
         handleClickReset() {
             this.resetInitNums();
@@ -87,8 +90,8 @@ export default {
             if (evt.target.id === "animationDuration") {
                 this.varyAnimationDuration(evt.target.value);
             }
-        },
-    },
+        }
+    }
 };
 </script>
 
@@ -106,7 +109,7 @@ $chart-bkg-color: #f4f4f4;
 }
 
 body {
-    background-color: $chart-bkg-color;
+    background-color: $chart-bkg-color !important;
 }
 
 .header-section {
