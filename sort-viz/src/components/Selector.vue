@@ -5,13 +5,13 @@
             mode="multiple"
             :size="size"
             placeholder="Please select"
-            :default-value="['a1', 'b2']"
-            style="width: 200px"
+            :default-value="['Quick Sort', 'Merge Sort']"
+            style="width: 260px"
             @change="handleChange"
             @popupScroll="popupScroll"
         >
-            <a-select-option v-for="i in 5" :key="(i + 9).toString(36) + i">
-                {{ (i + 9).toString(36) + i }}
+            <a-select-option v-for="method in methods" :key="method">
+                {{ method }}
             </a-select-option>
         </a-select>
     </div>
@@ -21,7 +21,14 @@
 export default {
     data() {
         return {
-            size: "default"
+            size: "default",
+            methods: [
+                "Quick Sort",
+                "Merge Sort",
+                "Insertion Sort",
+                "Shell Sort",
+                "Bucket Sort"
+            ]
         };
     },
     methods: {
@@ -43,7 +50,14 @@ export default {
 
     &__choice {
         border-radius: 12px !important;
-        width: 60px;
+        width: 70px;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+
+    &__choice__remove {
+        margin: 0;
     }
 }
 </style>
