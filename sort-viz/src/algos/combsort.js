@@ -44,6 +44,7 @@ export default function(nums) {
             sorted = true;
         }
 
+        // inner loop is a bubble sort with gap
         let i = 0;
         while (i + gap < length) {
             if (nums[i] > nums[i + gap]) {
