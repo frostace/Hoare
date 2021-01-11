@@ -42,7 +42,7 @@ export default {
     computed: {
         ...mapGetters(["getSelectedAlgorithms"]),
         algoFull() {
-            return this.getSelectedAlgorithms.length >= 3;
+            return this.getSelectedAlgorithms.length >= 4;
         }
     },
     methods: {

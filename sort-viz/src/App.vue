@@ -112,8 +112,9 @@ $chart-bkg-color: #f4f4f4;
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
     color: #2c3e50;
-    margin-top: 60px;
     padding: 0 20px;
+    position: absolute;
+    width: 100%;
 }
 
 body {
@@ -126,6 +127,7 @@ body {
     justify-content: space-between;
     align-items: center;
     padding: 0 60px;
+    margin-top: 60px;
 }
 
 /* default is desktop: */

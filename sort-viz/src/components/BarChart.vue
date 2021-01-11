@@ -9,24 +9,11 @@
             <p class="chart-title">{{ algo }}</p>
             <svg :id="'algo' + idx" class="svg" :class="'svg-algo' + idx" />
         </div>
-        <!-- <div class="section section-algo0">
-            <p class="chart-title">Quick Sort</p>
-            <svg id="algo0" class="svg svg-algo0" />
-        </div>
-        <div class="section section-algo1">
-            <p class="chart-title">Merge Sort</p>
-            <svg id="algo1" class="svg svg-algo1" />
-        </div>
-        <div class="section section-algo2">
-            <p class="chart-title">Insertion Sort</p>
-            <svg id="algo2" class="svg svg-algo2" />
-        </div> -->
     </div>
 </template>
 
 <script>
 import * as d3 from "d3";
-// import _ from "lodash";
 import quicksort from "../algos/quicksort";
 import mergesort from "../algos/mergesort";
 import insertionsort from "../algos/insertionsort";
@@ -35,7 +22,6 @@ import bubblesort from "../algos/bubblesort";
 import cocktailshakersort from "../algos/cocktailshakersort";
 import combsort from "../algos/combsort";
 import { mapGetters, mapActions } from "vuex";
-// import { start } from "repl";
 
 const AlgorithmBook = {
     "Quick Sort": quicksort,
@@ -151,11 +137,11 @@ export default {
         renderChart(nums, swapIndices = null, selector = "svg") {
             // Chart will be drawn here
             const body_width = d3.select("body")._groups[0][0].clientWidth;
-            const svg_width = body_width > 450 ? 300 : 150;
+            const svg_width = body_width > 450 ? 250 : 150;
             const svg_height = svg_width * 2;
-            const margin = svg_width / 5;
+            const margin = svg_width / 7;
             const chart_width = svg_width - 2 * margin;
-            const chart_height = svg_height - 2 * margin;
+            const chart_height = svg_height; //  - 2 * margin
             const arrayMax = this.getInitNumsMax;
 
             //  O                      y
@@ -179,10 +165,7 @@ export default {
                     svg.select("g").node() === null
                         ? svg
                               .append("g")
-                              .attr(
-                                  "transform",
-                                  `translate(${margin}, ${margin})`
-                              )
+                              .attr("transform", `translate(${margin}, ${0})`)
                         : svg.select("g");
                 chart = this.chartAlgo0;
             } else if (selector === "#algo1") {
@@ -190,10 +173,7 @@ export default {
                     svg.select("g").node() === null
                         ? svg
                               .append("g")
-                              .attr(
-                                  "transform",
-                                  `translate(${margin}, ${margin})`
-                              )
+                              .attr("transform", `translate(${margin}, ${0})`)
                         : svg.select("g");
                 chart = this.chartAlgo1;
             } else if (selector === "#algo2") {
@@ -201,10 +181,7 @@ export default {
                     svg.select("g").node() === null
                         ? svg
                               .append("g")
-                              .attr(
-                                  "transform",
-                                  `translate(${margin}, ${margin})`
-                              )
+                              .attr("transform", `translate(${margin}, ${0})`)
                         : svg.select("g");
                 chart = this.chartAlgo2;
             }
@@ -426,34 +403,24 @@ export default {
 }
 
 p {
-    margin-top: 15px;
+    // margin-top: 15px;
 }
 
 .section {
-    &:first-child p {
-        transform: translate(-47px, 48px) rotate(-90deg);
-        -ms-transform: translate(-47px, 48px) rotate(-90deg);
-        -o-transform: translate(-47px, 48px) rotate(-90deg);
-        -moz-transform: translate(-47px, 48px) rotate(-90deg);
-        -webkit-transform: translate(-47px, 48px) rotate(-90deg);
-    }
-    &:last-child p {
-        transform: translate(-66px, 48px) rotate(-90deg);
-        -ms-transform: translate(-66px, 48px) rotate(-90deg);
-        -o-transform: translate(-66px, 48px) rotate(-90deg);
-        -moz-transform: translate(-66px, 48px) rotate(-90deg);
-        -webkit-transform: translate(-66px, 48px) rotate(-90deg);
-    }
+    display: flex;
+    flex-direction: row;
+    margin-top: 55px;
+    margin-right: 40px;
+
     p {
-        position: absolute; // cannot make position relative here, or the svg's cannot be aligned
         font-size: 16px;
         color: #888;
-        // writing-mode: vertical-rl;
-        transform: translate(-52px, 48px) rotate(-90deg);
-        -ms-transform: translate(-52px, 48px) rotate(-90deg);
-        -o-transform: translate(-52px, 48px) rotate(-90deg);
-        -moz-transform: translate(-52px, 48px) rotate(-90deg);
-        -webkit-transform: translate(-52px, 48px) rotate(-90deg);
+        margin-top: 3px;
+        transform: rotate(-90deg);
+        -ms-transform: rotate(-90deg);
+        -o-transform: rotate(-90deg);
+        -moz-transform: rotate(-90deg);
+        -webkit-transform: rotate(-90deg);
         transform-origin: top right;
     }
     svg {
