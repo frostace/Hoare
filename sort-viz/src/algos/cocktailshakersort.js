@@ -1,3 +1,5 @@
+// Bidirectional Bubble Sort
+
 /*
 function A = cocktailShakerSort(A)
 % `beginIdx` and `endIdx` marks the first and last index to check
