@@ -28,7 +28,11 @@
                 content="Animation Speed"
             />
         </div>
-        <BarChart :inputNums="getInitNums" ref="barChart" />
+        <BarChart
+            :inputNums="getInitNums"
+            :selectedAlgorithms="getSelectedAlgorithms"
+            ref="barChart"
+        />
     </div>
 </template>
 
@@ -52,7 +56,11 @@ export default {
         document.title = "Hoare";
         this.resetInitNums();
     },
-    computed: mapGetters(["getInitNums", "getChartBusy"]),
+    computed: mapGetters([
+        "getInitNums",
+        "getChartBusy",
+        "getSelectedAlgorithms"
+    ]),
     data() {
         return {};
     },

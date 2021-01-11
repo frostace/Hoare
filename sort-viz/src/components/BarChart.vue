@@ -20,13 +20,13 @@ import * as d3 from "d3";
 // import _ from "lodash";
 import qsort from "../algos/qsort";
 import mergesort from "../algos/mergesort";
-import insertionsort from "../algos/insertionsort";
+import insertionsort from "../algos/bubblesort";
 // import shellsort from "../algos/shellsort";
 import { mapGetters, mapActions } from "vuex";
 // import { start } from "repl";
 
 export default {
-    props: ["inputNums"],
+    props: ["inputNums", "selectedAlgorithms"],
     data() {
         return {
             chart: null,
