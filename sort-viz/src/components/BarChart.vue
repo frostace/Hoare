@@ -1,29 +1,25 @@
 <template>
     <div id="canvas">
         <div
-            v-for="algo in getSelectedAlgorithms"
+            v-for="(algo, idx) in getSelectedAlgorithms"
             :key="algo"
             class="section"
-            :class="'section-' + minisculize(algo)"
+            :class="'section-algo' + idx"
         >
             <p class="chart-title">{{ algo }}</p>
-            <svg
-                :id="minisculize(algo)"
-                class="svg"
-                :class="'svg-' + minisculize(algo)"
-            />
+            <svg :id="'algo' + idx" class="svg" :class="'svg-algo' + idx" />
         </div>
-        <!-- <div class="section section-quicksort">
+        <!-- <div class="section section-algo0">
             <p class="chart-title">Quick Sort</p>
-            <svg id="quicksort" class="svg svg-quicksort" />
+            <svg id="algo0" class="svg svg-algo0" />
         </div>
-        <div class="section section-mergesort">
+        <div class="section section-algo1">
             <p class="chart-title">Merge Sort</p>
-            <svg id="mergesort" class="svg svg-mergesort" />
+            <svg id="algo1" class="svg svg-algo1" />
         </div>
-        <div class="section section-insertionsort">
+        <div class="section section-algo2">
             <p class="chart-title">Insertion Sort</p>
-            <svg id="insertionsort" class="svg svg-insertionsort" />
+            <svg id="algo2" class="svg svg-algo2" />
         </div> -->
     </div>
 </template>
@@ -34,25 +30,36 @@ import * as d3 from "d3";
 import quicksort from "../algos/quicksort";
 import mergesort from "../algos/mergesort";
 import insertionsort from "../algos/insertionsort";
-// import shellsort from "../algos/shellsort";
-// import bubblesort from "../algos/bubblesort";
-// import cocktailshakersort from "../algos/cocktailshakersort";
-// import combsort from "../algos/combsort";
+import shellsort from "../algos/shellsort";
+import bubblesort from "../algos/bubblesort";
+import cocktailshakersort from "../algos/cocktailshakersort";
+import combsort from "../algos/combsort";
 import { mapGetters, mapActions } from "vuex";
 // import { start } from "repl";
+
+const AlgorithmBook = {
+    "Quick Sort": quicksort,
+    "Merge Sort": mergesort,
+    "Insertion Sort": insertionsort,
+    "Shell Sort": shellsort,
+    "Bubble Sort": bubblesort,
+    "Cocktailshaker Sort": cocktailshakersort,
+    "Comb Sort": combsort
+};
+console.log(AlgorithmBook);
 
 export default {
     props: ["inputNums", "selectedAlgorithms"],
     data() {
         return {
             chart: null,
-            chartQsort: null,
-            chartMergesort: null,
-            chartInsertionsort: null,
+            chartAlgo0: null,
+            chartAlgo1: null,
+            chartAlgo2: null,
             palette: ["#caf0f8", "#00A6FB"],
-            animationNumsQuickSort: [],
-            animationNumsMergeSort: [],
-            animationNumsInsertionSort: [],
+            animationNumsAlgo0: [],
+            animationNumsAlgo1: [],
+            animationNumsAlgo2: [],
             iterNum: 0
         };
     },
@@ -73,21 +80,18 @@ export default {
     // },
     mounted() {
         // init all charts
-        this.renderChart(this.getInitNums, null, "#quicksort");
-        this.renderChart(this.getInitNums, null, "#mergesort");
-        this.renderChart(this.getInitNums, null, "#insertionsort");
+        this.renderChart(this.getInitNums, null, "#algo0");
+        this.renderChart(this.getInitNums, null, "#algo1");
+        this.renderChart(this.getInitNums, null, "#algo2");
     },
     updated() {
-        this.renderChart(this.getInitNums, null, "#quicksort");
-        this.renderChart(this.getInitNums, null, "#mergesort");
-        this.renderChart(this.getInitNums, null, "#insertionsort");
+        this.resetAllCharts();
+        this.renderChart(this.getInitNums, null, "#algo0");
+        this.renderChart(this.getInitNums, null, "#algo1");
+        this.renderChart(this.getInitNums, null, "#algo2");
     },
     methods: {
-        ...mapActions([
-            "releaseQsort",
-            "releaseMergeSort",
-            "releaseInsertionSort"
-        ]),
+        ...mapActions(["releaseAlgo0", "releaseAlgo1", "releaseAlgo2"]),
         /**
          * A linear interpolator for hexadecimal colors
          * @param {Number} amount
@@ -131,19 +135,18 @@ export default {
         },
         resetAllCharts() {
             // clear current charts
-            if (this.chartQsort != null) this.chartQsort.remove();
-            if (this.chartMergesort != null) this.chartMergesort.remove();
-            if (this.chartInsertionsort != null)
-                this.chartInsertionsort.remove();
+            if (this.chartAlgo0 != null) this.chartAlgo0.remove();
+            if (this.chartAlgo1 != null) this.chartAlgo1.remove();
+            if (this.chartAlgo2 != null) this.chartAlgo2.remove();
             // re-render charts with new data
-            this.renderChart(this.getInitNums, null, "#quicksort");
-            this.renderChart(this.getInitNums, null, "#mergesort");
-            this.renderChart(this.getInitNums, null, "#insertionsort");
+            this.renderChart(this.getInitNums, null, "#algo0");
+            this.renderChart(this.getInitNums, null, "#algo1");
+            this.renderChart(this.getInitNums, null, "#algo2");
         },
         resetAllAnimations() {
-            this.animationNumsQuickSort = [];
-            this.animationNumsMergeSort = [];
-            this.animationNumsInsertionSort = [];
+            this.animationNumsAlgo0 = [];
+            this.animationNumsAlgo1 = [];
+            this.animationNumsAlgo2 = [];
         },
         renderChart(nums, swapIndices = null, selector = "svg") {
             // Chart will be drawn here
@@ -171,21 +174,39 @@ export default {
 
             let chart;
 
-            if (selector === "#quicksort") {
-                this.chartQsort = svg
-                    .append("g")
-                    .attr("transform", `translate(${margin}, ${margin})`);
-                chart = this.chartQsort;
-            } else if (selector === "#mergesort") {
-                this.chartMergesort = svg
-                    .append("g")
-                    .attr("transform", `translate(${margin}, ${margin})`);
-                chart = this.chartMergesort;
-            } else if (selector === "#insertionsort") {
-                this.chartInsertionsort = svg
-                    .append("g")
-                    .attr("transform", `translate(${margin}, ${margin})`);
-                chart = this.chartInsertionsort;
+            if (selector === "#algo0") {
+                this.chartAlgo0 =
+                    svg.select("g").node() === null
+                        ? svg
+                              .append("g")
+                              .attr(
+                                  "transform",
+                                  `translate(${margin}, ${margin})`
+                              )
+                        : svg.select("g");
+                chart = this.chartAlgo0;
+            } else if (selector === "#algo1") {
+                this.chartAlgo1 =
+                    svg.select("g").node() === null
+                        ? svg
+                              .append("g")
+                              .attr(
+                                  "transform",
+                                  `translate(${margin}, ${margin})`
+                              )
+                        : svg.select("g");
+                chart = this.chartAlgo1;
+            } else if (selector === "#algo2") {
+                this.chartAlgo2 =
+                    svg.select("g").node() === null
+                        ? svg
+                              .append("g")
+                              .attr(
+                                  "transform",
+                                  `translate(${margin}, ${margin})`
+                              )
+                        : svg.select("g");
+                chart = this.chartAlgo2;
             }
 
             const xScale = d3
@@ -227,51 +248,48 @@ export default {
 
             let nums = this.getInitNums;
             let localIterNum = ++this.iterNum;
-            // TODO: simplify this command with wildcard *
 
             // get animation process synchronously
-            this.animationNumsQuickSort = quicksort(
-                [...nums],
-                0,
-                nums.length - 1
-            );
-            this.animationNumsMergeSort = mergesort(
-                [...nums],
-                0,
-                nums.length - 1
-            );
-            this.animationNumsInsertionSort = insertionsort([...nums]);
+            // TODO: refactor the following 3 trunks with forEach
+            if (this.getSelectedAlgorithms.length >= 1)
+                this.animationNumsAlgo0 = AlgorithmBook[
+                    this.getSelectedAlgorithms[0]
+                ]([...nums]);
+            if (this.getSelectedAlgorithms.length >= 2)
+                this.animationNumsAlgo1 = AlgorithmBook[
+                    this.getSelectedAlgorithms[1]
+                ]([...nums]);
+            if (this.getSelectedAlgorithms.length >= 3)
+                this.animationNumsAlgo2 = AlgorithmBook[
+                    this.getSelectedAlgorithms[2]
+                ]([...nums]);
 
-            let lengthQuickSortAnima = this.animationNumsQuickSort.length;
-            let lengthMergeSortAnima = this.animationNumsMergeSort.length;
-            let lengthInsertionSortAnima = this.animationNumsInsertionSort
-                .length;
+            let lengthAlgo0Anima = this.animationNumsAlgo0.length;
+            let lengthAlgo1Anima = this.animationNumsAlgo1.length;
+            let lengthAlgo2Anima = this.animationNumsAlgo2.length;
 
             let startTimeStamp1, startTimeStamp2, startTimeStamp3;
 
             // ========================================
-            // ======= Async Ops for Qsort Viz ========
+            // ======= Async Ops for Algos Viz ========
             // ========================================
             // iteratively render nums, pointers coral, others blue
-            const quicksortLastFrameNums = this.animationNumsQuickSort[
-                lengthQuickSortAnima - 1
+            if (this.getSelectedAlgorithms.length <= 0) return;
+            const algo0LastFrameNums = this.animationNumsAlgo0[
+                lengthAlgo0Anima - 1
             ]["nums"];
-            const quicksortLastFrame = () => {
+            const algo0LastFrame = () => {
                 if (this.getChartBusy && localIterNum === this.iterNum) {
-                    if (this.chartQsort != null) this.chartQsort.remove();
-                    this.renderChart(
-                        quicksortLastFrameNums,
-                        null,
-                        "#quicksort"
-                    );
-                    // this.animationNumsQuickSort = [];
-                    this.releaseQsort();
+                    if (this.chartAlgo0 != null) this.chartAlgo0.remove();
+                    this.renderChart(algo0LastFrameNums, null, "#algo0");
+                    // this.animationNumsAlgo0 = [];
+                    this.releaseAlgo0();
                 } else return;
             };
-            const quicksortFrame = timestamp => {
+            const algo0Frame = timestamp => {
                 // base case
-                if (this.animationNumsQuickSort.length === 0) {
-                    window.requestAnimationFrame(quicksortLastFrame);
+                if (this.animationNumsAlgo0.length === 0) {
+                    window.requestAnimationFrame(algo0LastFrame);
                     return;
                 }
                 // control fps according to getAnimationDuration
@@ -282,79 +300,42 @@ export default {
 
                 // render chart once per animationDuration
                 if (elapsedTime > this.getAnimationDuration) {
-                    let animationFrame = this.animationNumsQuickSort.shift();
+                    let animationFrame = this.animationNumsAlgo0.shift();
                     let iterationNums = animationFrame["nums"];
                     let swapIndices = animationFrame["pointers"];
                     if (this.getChartBusy && localIterNum === this.iterNum) {
                         // compare local iter num with context iter num to prevent conflict calls of animation
-                        if (this.chartQsort != null) this.chartQsort.remove();
-                        this.renderChart(
-                            iterationNums,
-                            swapIndices,
-                            "#quicksort"
-                        );
+                        if (this.chartAlgo0 != null) this.chartAlgo0.remove();
+                        this.renderChart(iterationNums, swapIndices, "#algo0");
                     } else return;
 
                     // clear startTimeStamp1
                     startTimeStamp1 = undefined;
                 }
 
-                window.requestAnimationFrame(quicksortFrame);
+                window.requestAnimationFrame(algo0Frame);
             };
-            window.requestAnimationFrame(quicksortFrame);
-
-            // for (let i = 0; i < lengthQuickSortAnima; i++) {
-            //     let iterationNums = this.animationNumsQuickSort[i]["nums"];
-            //     let swapIndices = this.animationNumsQuickSort[i]["pointers"];
-            //     setTimeout(() => {
-            //         if (this.getChartBusy && localIterNum === this.iterNum) {
-            //             // compare local iter num with context iter num to prevent conflict calls of animation
-            //             if (this.chartQsort != null) this.chartQsort.remove();
-            //             this.renderChart(iterationNums, swapIndices, "#quicksort");
-            //         } else return;
-            //         // console.log(new Date().getSeconds(), iterationNums);
-            //     }, i * this.getAnimationDuration);
-            // }
-
-            // // recover all rects to blue
-            // setTimeout(() => {
-            //     if (this.getChartBusy && localIterNum === this.iterNum) {
-            //         if (this.chartQsort != null) this.chartQsort.remove();
-            //         this.renderChart(
-            //             this.animationNumsQuickSort[lengthQuickSortAnima - 1][
-            //                 "nums"
-            //             ],
-            //             null,
-            //             "#quicksort"
-            //         );
-            //         this.animationNumsQuickSort = [];
-            //         this.releaseQsort();
-            //     } else return;
-            // }, lengthQuickSortAnima * this.getAnimationDuration);
+            window.requestAnimationFrame(algo0Frame);
 
             // ========================================
-            // ===== Async Ops for MergeSort Viz ======
+            // ===== Async Ops for Algo1 Viz ======
             // ========================================
-            const mergeSortLastFrameNums = this.animationNumsMergeSort[
-                lengthMergeSortAnima - 1
+            if (this.getSelectedAlgorithms.length <= 1) return;
+            const algo1LastFrameNums = this.animationNumsAlgo1[
+                lengthAlgo1Anima - 1
             ]["nums"];
-            const mergeSortLastFrame = () => {
+            const algo1LastFrame = () => {
                 if (this.getChartBusy && localIterNum === this.iterNum) {
-                    if (this.chartMergesort != null)
-                        this.chartMergesort.remove();
-                    this.renderChart(
-                        mergeSortLastFrameNums,
-                        null,
-                        "#mergesort"
-                    );
-                    // this.animationNumsQuickSort = [];
-                    this.releaseMergeSort();
+                    if (this.chartAlgo1 != null) this.chartAlgo1.remove();
+                    this.renderChart(algo1LastFrameNums, null, "#algo1");
+                    // this.animationNumsAlgo0 = [];
+                    this.releaseAlgo1();
                 } else return;
             };
-            const mergeSortFrame = timestamp => {
+            const algo1Frame = timestamp => {
                 // base case
-                if (this.animationNumsMergeSort.length === 0) {
-                    window.requestAnimationFrame(mergeSortLastFrame);
+                if (this.animationNumsAlgo1.length === 0) {
+                    window.requestAnimationFrame(algo1LastFrame);
                     return;
                 }
 
@@ -366,85 +347,42 @@ export default {
 
                 // render chart once per animationDuration
                 if (elapsedTime > this.getAnimationDuration) {
-                    let animationFrame = this.animationNumsMergeSort.shift();
+                    let animationFrame = this.animationNumsAlgo1.shift();
                     let iterationNums = animationFrame["nums"];
                     let swapIndices = animationFrame["pointers"];
                     if (this.getChartBusy && localIterNum === this.iterNum) {
                         // compare local iter num with context iter num to prevent conflict calls of animation
-                        if (this.chartMergesort != null)
-                            this.chartMergesort.remove();
-                        this.renderChart(
-                            iterationNums,
-                            swapIndices,
-                            "#mergesort"
-                        );
+                        if (this.chartAlgo1 != null) this.chartAlgo1.remove();
+                        this.renderChart(iterationNums, swapIndices, "#algo1");
                     } else return;
 
                     // clear startTimeStamp2
                     startTimeStamp2 = undefined;
                 }
-                window.requestAnimationFrame(mergeSortFrame);
+                window.requestAnimationFrame(algo1Frame);
             };
-            window.requestAnimationFrame(mergeSortFrame);
-
-            // for (let i = 0; i < lengthMergeSortAnima; i++) {
-            //     let iterationNums = this.animationNumsMergeSort[i]["nums"];
-            //     let swapIndices = this.animationNumsMergeSort[i]["pointers"];
-            //     setTimeout(() => {
-            //         if (this.getChartBusy && localIterNum === this.iterNum) {
-            //             if (this.chartMergesort != null)
-            //                 this.chartMergesort.remove();
-            //             this.renderChart(
-            //                 iterationNums,
-            //                 swapIndices,
-            //                 "#mergesort"
-            //             );
-            //         } else return;
-            //         // console.log(new Date().getSeconds(), iterationNums);
-            //     }, i * this.getAnimationDuration);
-            // }
-
-            // // recover all rects to blue
-            // setTimeout(() => {
-            //     if (this.getChartBusy && localIterNum === this.iterNum) {
-            //         if (this.chartMergesort != null)
-            //             this.chartMergesort.remove();
-            //         this.renderChart(
-            //             this.animationNumsMergeSort[lengthMergeSortAnima - 1][
-            //                 "nums"
-            //             ],
-            //             null,
-            //             "#mergesort"
-            //         );
-            //         this.animationNumsMergekSort = [];
-            //         this.releaseMergeSort();
-            //     } else return;
-            // }, lengthMergeSortAnima * this.getAnimationDuration);
+            window.requestAnimationFrame(algo1Frame);
 
             // ========================================
             // ==== Async Ops for Insertion Viz =======
             // ========================================
             // iteratively render nums, swaping nums to be coral, normal nums to be blue
-            const insertionSortLastFrameNums = this.animationNumsInsertionSort[
-                lengthInsertionSortAnima - 1
+            if (this.getSelectedAlgorithms.length <= 2) return;
+            const algo2LastFrameNums = this.animationNumsAlgo2[
+                lengthAlgo2Anima - 1
             ]["nums"];
-            const insertionSortLastFrame = () => {
+            const algo2LastFrame = () => {
                 if (this.getChartBusy && localIterNum === this.iterNum) {
-                    if (this.chartInsertionsort != null)
-                        this.chartInsertionsort.remove();
-                    this.renderChart(
-                        insertionSortLastFrameNums,
-                        null,
-                        "#insertionsort"
-                    );
-                    // this.animationNumsQuickSort = [];
-                    this.releaseInsertionSort();
+                    if (this.chartAlgo2 != null) this.chartAlgo2.remove();
+                    this.renderChart(algo2LastFrameNums, null, "#algo2");
+                    // this.animationNumsAlgo0 = [];
+                    this.releaseAlgo2();
                 } else return;
             };
-            const insertionSortFrame = timestamp => {
+            const algo2Frame = timestamp => {
                 // base case
-                if (this.animationNumsInsertionSort.length === 0) {
-                    window.requestAnimationFrame(insertionSortLastFrame);
+                if (this.animationNumsAlgo2.length === 0) {
+                    window.requestAnimationFrame(algo2LastFrame);
                     return;
                 }
 
@@ -455,61 +393,21 @@ export default {
                 const elapsed = timestamp - startTimeStamp3;
 
                 if (elapsed > this.getAnimationDuration) {
-                    let animationFrame = this.animationNumsInsertionSort.shift();
+                    let animationFrame = this.animationNumsAlgo2.shift();
                     let iterationNums = animationFrame["nums"];
                     let swapIndices = animationFrame["pointers"];
                     if (this.getChartBusy && localIterNum === this.iterNum) {
                         // compare local iter num with context iter num to prevent conflict calls of animation
-                        if (this.chartInsertionsort != null)
-                            this.chartInsertionsort.remove();
-                        this.renderChart(
-                            iterationNums,
-                            swapIndices,
-                            "#insertionsort"
-                        );
+                        if (this.chartAlgo2 != null) this.chartAlgo2.remove();
+                        this.renderChart(iterationNums, swapIndices, "#algo2");
                     } else return;
 
                     // clear startTimeStamp3
                     startTimeStamp3 = undefined;
                 }
-                window.requestAnimationFrame(insertionSortFrame);
+                window.requestAnimationFrame(algo2Frame);
             };
-            window.requestAnimationFrame(insertionSortFrame);
-            // for (let i = 0; i < lengthInsertionSortAnima; i++) {
-            //     let iterationNums = this.animationNumsInsertionSort[i]["nums"];
-            //     let swapIndices = this.animationNumsInsertionSort[i][
-            //         "pointers"
-            //     ];
-            //     setTimeout(() => {
-            //         if (this.getChartBusy && localIterNum === this.iterNum) {
-            //             if (this.chartInsertionsort != null)
-            //                 this.chartInsertionsort.remove();
-            //             this.renderChart(
-            //                 iterationNums,
-            //                 swapIndices,
-            //                 "#insertionsort"
-            //             );
-            //         } else return;
-            //         // console.log(new Date().getSeconds(), iterationNums);
-            //     }, i * this.getAnimationDuration);
-            // }
-
-            // recover all rects to blue
-            // setTimeout(() => {
-            //     if (this.getChartBusy && localIterNum === this.iterNum) {
-            //         if (this.chartInsertionsort != null)
-            //             this.chartInsertionsort.remove();
-            //         this.renderChart(
-            //             this.animationNumsInsertionSort[
-            //                 lengthInsertionSortAnima - 1
-            //             ]["nums"],
-            //             null,
-            //             "#insertionsort"
-            //         );
-            //         this.animationNumsInsertionSort = [];
-            //         this.releaseInsertionSort();
-            //     } else return;
-            // }, lengthInsertionSortAnima * this.getAnimationDuration);
+            window.requestAnimationFrame(algo2Frame);
         } // end of startAnimation
     } // end of methods
 };

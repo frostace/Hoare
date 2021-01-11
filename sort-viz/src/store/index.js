@@ -17,9 +17,9 @@ const state = {
     animationDuration: 80, // default
     arrayLength: 50, // default
     chartIsBusy: false,
-    qsortFinished: false,
-    mergesortFinished: false,
-    insertionsortFinished: false,
+    algo0Finished: false,
+    algo1Finished: false,
+    algo2Finished: false,
     selectedAlgorithms: ["Quick Sort", "Merge Sort", "Insertion Sort"]
 };
 
@@ -48,14 +48,14 @@ const actions = {
     varyAlgorithms({ commit }, newAlgos) {
         commit("updateAlgorithms", newAlgos);
     },
-    releaseQsort({ commit }) {
-        commit("finishQsort");
+    releaseAlgo0({ commit }) {
+        commit("finishAlgo0");
     },
-    releaseMergeSort({ commit }) {
-        commit("finishMergeSort");
+    releaseAlgo1({ commit }) {
+        commit("finishAlgo1");
     },
-    releaseInsertionSort({ commit }) {
-        commit("finishInsertionSort");
+    releaseAlgo2({ commit }) {
+        commit("finishAlgo2");
     }
 };
 
@@ -67,9 +67,9 @@ const mutations = {
     },
     updateChartBusy: state => {
         state.chartIsBusy = true;
-        state.qsortFinished = false;
-        state.mergesortFinished = false;
-        state.insertionsortFinished = false;
+        state.algo0Finished = false;
+        state.algo1Finished = false;
+        state.algo2Finished = false;
     },
     updateArrayLength: (state, newLength) => {
         state.arrayLength = newLength * 2;
@@ -82,28 +82,20 @@ const mutations = {
     updateAlgorithms: (state, newAlgos) => {
         state.selectedAlgorithms = newAlgos;
     },
-    finishQsort: state => {
-        state.qsortFinished = true;
-        state.chartIsBusy = !(
-            state.mergesortFinished && state.insertionsortFinished
-        );
-        console.log("qsort fin");
+    finishAlgo0: state => {
+        state.algo0Finished = true;
+        state.chartIsBusy = !(state.algo1Finished && state.algo2Finished);
+        console.log("algo0 fin");
     },
-    finishMergeSort: state => {
-        state.mergesortFinished = true;
-        state.chartIsBusy = !(
-            state.qsortFinished && state.insertionsortFinished
-        );
-        console.log("mergesort fin");
+    finishAlgo1: state => {
+        state.algo1Finished = true;
+        state.chartIsBusy = !(state.algo0Finished && state.algo2Finished);
+        console.log("algo1 fin");
     },
-    finishInsertionSort: state => {
-        state.insertionsortFinished = true;
-        state.chartIsBusy = !(state.qsortFinished && state.mergesortFinished);
-        console.log(
-            "insertsion fin",
-            state.qsortFinished,
-            state.mergesortFinished
-        );
+    finishAlgo2: state => {
+        state.algo2Finished = true;
+        state.chartIsBusy = !(state.algo0Finished && state.algo1Finished);
+        console.log("algo2 fin", state.algo0Finished, state.algo1Finished);
     }
 };
 

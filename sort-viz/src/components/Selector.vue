@@ -33,7 +33,9 @@ export default {
                 "Merge Sort",
                 "Insertion Sort",
                 "Shell Sort",
-                "Bucket Sort"
+                "Bubble Sort",
+                "Cocktailshaker Sort",
+                "Comb Sort"
             ]
         };
     },

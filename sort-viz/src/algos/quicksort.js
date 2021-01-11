@@ -1,6 +1,6 @@
-export default function(nums, l, r) {
-    var animationNums = [];
-    var qsortHelper = function(nums, l, r) {
+export default function(nums) {
+    let animationNums = [];
+    let qsortHelper = function(nums, l, r) {
         // base case
         if (l >= r) return;
 
@@ -11,7 +11,7 @@ export default function(nums, l, r) {
         qsortHelper(nums, pivotIdx + 1, r);
     };
 
-    var partition = function(nums, l, r) {
+    let partition = function(nums, l, r) {
         let anchor = l - 1;
         let pivot = nums[r];
 
@@ -21,12 +21,12 @@ export default function(nums, l, r) {
                 [nums[anchor], nums[i]] = [nums[i], nums[anchor]];
                 animationNums.push({
                     nums: nums.slice(),
-                    pointers: { [anchor]: true, [i]: true },
+                    pointers: { [anchor]: true, [i]: true }
                 });
             }
             animationNums.push({
                 nums: nums.slice(),
-                pointers: { [i]: true },
+                pointers: { [i]: true }
             });
         }
 
@@ -34,12 +34,14 @@ export default function(nums, l, r) {
         [nums[anchor + 1], nums[r]] = [nums[r], nums[anchor + 1]];
         animationNums.push({
             nums: nums.slice(),
-            pointers: { [anchor + 1]: true, [r]: true },
+            pointers: { [anchor + 1]: true, [r]: true }
         });
 
         return anchor + 1;
     };
 
+    let l = 0,
+        r = nums.length - 1;
     qsortHelper(nums, l, r);
     return animationNums;
 }

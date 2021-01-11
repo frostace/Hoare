@@ -59,9 +59,9 @@
 //     return animationNums;
 // }
 
-export default function(nums, l = null, r = null) {
-    var animationNums = [];
-    var mergesortHelper = function(nums, l, r) {
+export default function(nums) {
+    let animationNums = [];
+    let mergesortHelper = function(nums, l, r) {
         // base case
         if (l === r) return nums.slice(l, r + 1);
 
@@ -83,7 +83,7 @@ export default function(nums, l = null, r = null) {
                     : leftOrdered[left++];
             animationNums.push({
                 nums: nums.slice(),
-                pointers: { [k - 1]: true },
+                pointers: { [k - 1]: true }
             });
         }
         while (k <= r) {
@@ -91,13 +91,15 @@ export default function(nums, l = null, r = null) {
                 left < leftLen ? leftOrdered[left++] : rightOrdered[right++];
             animationNums.push({
                 nums: nums.slice(),
-                pointers: { [k - 1]: true },
+                pointers: { [k - 1]: true }
             });
         }
 
         return nums.slice(l, r + 1);
     };
 
+    let l = 0,
+        r = nums.length - 1;
     mergesortHelper(nums, l, r);
 
     return animationNums;
