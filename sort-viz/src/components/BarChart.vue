@@ -20,7 +20,7 @@ import * as d3 from "d3";
 // import _ from "lodash";
 import qsort from "../algos/qsort";
 import mergesort from "../algos/mergesort";
-import insertionsort from "../algos/bubblesort";
+import insertionsort from "../algos/cocktailshakersort";
 // import shellsort from "../algos/shellsort";
 import { mapGetters, mapActions } from "vuex";
 // import { start } from "repl";
