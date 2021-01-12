@@ -6,7 +6,6 @@
             :size="size"
             placeholder="Please select"
             :default-value="getSelectedAlgorithms"
-            style="width: 260px"
             @change="handleChange"
             @popupScroll="popupScroll"
         >
@@ -76,5 +75,9 @@ export default {
     &__choice__remove {
         margin: 0;
     }
+}
+
+.ant-select {
+    width: 260px;
 }
 </style>

@@ -3,11 +3,18 @@
         <div
             v-for="(algo, idx) in getSelectedAlgorithms"
             :key="algo"
-            class="section"
-            :class="'section-algo' + idx"
+            class="rotation-wrapper-outer"
         >
-            <p class="chart-title">{{ algo }}</p>
-            <svg :id="'algo' + idx" class="svg" :class="'svg-algo' + idx" />
+            <div class="rotation-wrapper-inner">
+                <div class="section" :class="'section-algo' + idx">
+                    <p class="chart-title">{{ algo }}</p>
+                    <svg
+                        :id="'algo' + idx"
+                        class="svg"
+                        :class="'svg-algo' + idx"
+                    />
+                </div>
+            </div>
         </div>
     </div>
 </template>
@@ -402,10 +409,6 @@ export default {
     align-items: center;
 }
 
-p {
-    // margin-top: 15px;
-}
-
 .section {
     display: flex;
     flex-direction: row;
@@ -413,6 +416,9 @@ p {
     margin-right: 40px;
 
     p {
+        height: 20px;
+        width: 100px;
+        text-align: right;
         font-size: 16px;
         color: #888;
         margin-top: 3px;
@@ -426,7 +432,7 @@ p {
     svg {
         -webkit-display: block;
         display: block;
-        height: 100%;
+        // height: 100%;
     }
 }
 
@@ -438,22 +444,44 @@ p {
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        height: 400px;
+        height: 450px;
+
+        .rotation-wrapper-outer {
+            // display: table;
+            height: fit-content; // shrink width to fit content
+        }
+        .rotation-wrapper-inner {
+            padding: 50% 0; // padding decided by parent width
+            height: 0;
+        }
+
         .section {
             flex: 1;
-            display: inline-block;
-            transform: translate(25%, 0) rotate(90deg);
-            -webkit-transform: translate(25%, 0) rotate(90deg);
-            -moz-transform: translate(25%, 0) rotate(90deg);
-            -o-transform: translate(25%, 0) rotate(90deg);
-            -ms-transform: translate(25%, 0) rotate(90deg);
-            margin-bottom: -60%;
+            margin-right: 0px;
+
+            margin-top: -50%;
+            transform: rotate(-90deg) translate(-120%, -24%);
+            -moz-transform: rotate(-90deg) translate(-120%, -24%);
+            -ms-transform: rotate(-90deg) translate(-120%, -24%);
+            -webkit-transform: rotate(-90deg) translate(-120%, -24%);
+            -o-transform: rotate(-90deg) translate(-120%, -24%);
+            transform-origin: top left;
+
             p {
-                -moz-transform: translate(10px, 33px) rotate(-180deg);
-                -ms-transform: translate(10px, 33px) rotate(-180deg);
-                -webkit-transform: translate(10px, 33px) rotate(-180deg);
-                -o-transform: translate(10px, 33px) rotate(-180deg);
-                transform: translate(10px, 33px) rotate(-180deg);
+                position: absolute;
+                text-align: left;
+                width: 100px;
+                height: 20px;
+                transform: rotate(90deg) translateY(-15px);
+                -moz-transform: rotate(90deg) translateY(-15px);
+                -ms-transform: rotate(90deg) translateY(-15px);
+                -webkit-transform: rotate(90deg) translateY(-15px);
+                -o-transform: rotate(90deg) translateY(-15px);
+                transform-origin: top left;
+            }
+
+            .svg {
+                display: block;
             }
         }
     }
