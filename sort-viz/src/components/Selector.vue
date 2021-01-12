@@ -23,6 +23,7 @@
 
 <script>
 import { mapGetters, mapActions } from "vuex";
+import { algorithmCapacity } from "../assets/constants";
 
 export default {
     data() {
@@ -42,7 +43,7 @@ export default {
     computed: {
         ...mapGetters(["getSelectedAlgorithms"]),
         algoFull() {
-            return this.getSelectedAlgorithms.length >= 4;
+            return this.getSelectedAlgorithms.length >= algorithmCapacity;
         }
     },
     methods: {
