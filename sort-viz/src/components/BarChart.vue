@@ -28,6 +28,7 @@ import shellsort from "../algos/shellsort";
 import bubblesort from "../algos/bubblesort";
 import cocktailshakersort from "../algos/cocktailshakersort";
 import combsort from "../algos/combsort";
+import heapsort from "../algos/heapsort";
 import { mapGetters, mapActions } from "vuex";
 
 const AlgorithmBook = {
@@ -37,7 +38,8 @@ const AlgorithmBook = {
     "Shell Sort": shellsort,
     "Bubble Sort": bubblesort,
     "Cocktailshaker Sort": cocktailshakersort,
-    "Comb Sort": combsort
+    "Comb Sort": combsort,
+    "Heap Sort": heapsort
 };
 console.log(AlgorithmBook);
 

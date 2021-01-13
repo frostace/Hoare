@@ -35,7 +35,8 @@ export default {
                 "Shell Sort",
                 "Bubble Sort",
                 "Cocktailshaker Sort",
-                "Comb Sort"
+                "Comb Sort",
+                "Heap Sort"
             ]
         };
     },
