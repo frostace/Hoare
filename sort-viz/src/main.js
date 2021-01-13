@@ -5,10 +5,14 @@ import "ant-design-vue/dist/antd.css";
 
 import store from "./store";
 import { library } from "@fortawesome/fontawesome-svg-core";
-import { faPlay, faRedo } from "@fortawesome/free-solid-svg-icons";
+import {
+    faPlay,
+    faRedo,
+    faSortNumericUpAlt
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
-library.add(faPlay, faRedo);
+library.add(faPlay, faRedo, faSortNumericUpAlt);
 
 Vue.component("font-awesome-icon", FontAwesomeIcon);
 Vue.use(Antd);

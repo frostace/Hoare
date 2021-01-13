@@ -14,6 +14,12 @@
                 iconName="redo"
                 content="Reset"
             />
+            <Button
+                id="button-testcase"
+                @click="handleClickUploadTestcase"
+                iconName="sort-numeric-up-alt"
+                content="Testcase"
+            />
             <Selector id="select" />
             <RangeSlider
                 id="slider-length"
