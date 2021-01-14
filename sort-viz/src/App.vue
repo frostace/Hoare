@@ -18,7 +18,7 @@
                 id="button-testcase"
                 @click="handleClickUploadTestcase"
                 iconName="sort-numeric-up-alt"
-                content="Testcase"
+                content="Array"
             />
             <Selector id="select" />
             <RangeSlider
@@ -148,10 +148,10 @@ body {
     .header-section {
         display: grid;
         grid-template-areas:
-            "button1 button2"
-            "select select"
-            "slider1 slider1"
-            "slider2 slider2";
+            "button1 button2 button3"
+            "select select select"
+            "slider1 slider1 slider1"
+            "slider2 slider2 slider2";
         grid-gap: 1rem 0;
         padding: 0px 30px 0 30px;
         margin-top: 40px;
@@ -159,12 +159,18 @@ body {
 
     #button-play {
         grid-area: button1;
-        width: calc((94vw - 60px - 1rem) / 2);
+        width: calc((94vw - 60px - 1rem) / 3);
     }
 
     #button-redo {
         grid-area: button2;
-        width: calc((94vw - 60px - 1rem) / 2);
+        width: calc((94vw - 60px - 1rem) / 3);
+        justify-self: center;
+    }
+
+    #button-testcase {
+        grid-area: button3;
+        width: calc((94vw - 60px - 1rem) / 3);
         justify-self: end;
     }
 
