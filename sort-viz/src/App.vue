@@ -96,6 +96,9 @@ export default {
             this.makeChartBusy();
             this.$refs.barChart.startAnimation();
         },
+        handleClickUploadTestcase() {
+            console.log("clicked");
+        },
         handleRangeSet(evt) {
             if (evt.target.id === "arrayLength") {
                 this.varyArrayLength(evt.target.value);

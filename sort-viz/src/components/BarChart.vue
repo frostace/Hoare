@@ -29,6 +29,7 @@ import bubblesort from "../algos/bubblesort";
 import cocktailshakersort from "../algos/cocktailshakersort";
 import combsort from "../algos/combsort";
 import heapsort from "../algos/heapsort";
+import countingsort from "../algos/countingsort";
 import { mapGetters, mapActions } from "vuex";
 
 const AlgorithmBook = {
@@ -39,7 +40,8 @@ const AlgorithmBook = {
     "Bubble Sort": bubblesort,
     "Cocktailshaker Sort": cocktailshakersort,
     "Comb Sort": combsort,
-    "Heap Sort": heapsort
+    "Heap Sort": heapsort,
+    "Counting Sort": countingsort
 };
 console.log(AlgorithmBook);
 
@@ -151,7 +153,7 @@ export default {
             const margin = svg_width / 7;
             const chart_width = svg_width - 2 * margin;
             const chart_height = svg_height; //  - 2 * margin
-            const arrayMax = this.getInitNumsMax;
+            const arrayMax = Math.max(this.getInitNumsMax, ...nums);
 
             //  O                      y
             //   --------------------->

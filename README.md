@@ -9,6 +9,7 @@ This Project is a visualization demo for several sorting algorithms:
 -   Bubble Sort
 -   Cocktail Shaker Sort
 -   Comb Sort
+-   Counting Sort
 
 See details of these algorithms [here](https://github.com/frostace/LeetCode/blob/master/Sort/912.%20Sort%20an%20Array.md).
 
