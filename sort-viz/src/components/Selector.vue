@@ -37,7 +37,8 @@ export default {
                 "Cocktailshaker Sort",
                 "Comb Sort",
                 "Heap Sort",
-                "Counting Sort"
+                "Counting Sort",
+                "Bucket Sort"
             ]
         };
     },

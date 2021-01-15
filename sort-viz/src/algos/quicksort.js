@@ -24,10 +24,10 @@ export default function(nums) {
                     pointers: { [anchor]: true, [i]: true }
                 });
             }
-            animationNums.push({
-                nums: nums.slice(),
-                pointers: { [i]: true }
-            });
+            // animationNums.push({
+            //     nums: nums.slice(),
+            //     pointers: { [i]: true }
+            // });
         }
 
         // swap val @ anchor + 1 and r
@@ -42,6 +42,7 @@ export default function(nums) {
 
     let l = 0,
         r = nums.length - 1;
+    if (l === r) return [{ nums: nums }];
     qsortHelper(nums, l, r);
     return animationNums;
 }

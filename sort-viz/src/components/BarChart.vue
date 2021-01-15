@@ -30,6 +30,7 @@ import cocktailshakersort from "../algos/cocktailshakersort";
 import combsort from "../algos/combsort";
 import heapsort from "../algos/heapsort";
 import countingsort from "../algos/countingsort";
+import bucketsort from "../algos/bucketsort.mjs";
 import { mapGetters, mapActions } from "vuex";
 
 const AlgorithmBook = {
@@ -41,7 +42,8 @@ const AlgorithmBook = {
     "Cocktailshaker Sort": cocktailshakersort,
     "Comb Sort": combsort,
     "Heap Sort": heapsort,
-    "Counting Sort": countingsort
+    "Counting Sort": countingsort,
+    "Bucket Sort": bucketsort
 };
 console.log(AlgorithmBook);
 
