@@ -1,3 +1,1 @@
-let a = [, ,];
-a.push(1);
-console.log(a.length);
+console.log(JSON.parse("[104,107,42,47,70,82]"));
