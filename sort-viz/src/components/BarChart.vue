@@ -31,6 +31,7 @@ import combsort from "../algos/combsort";
 import heapsort from "../algos/heapsort";
 import countingsort from "../algos/countingsort";
 import bucketsort from "../algos/bucketsort.mjs";
+import radixsort from "../algos/radixsort-msd.js";
 import { mapGetters, mapActions } from "vuex";
 
 const AlgorithmBook = {
@@ -43,7 +44,8 @@ const AlgorithmBook = {
     "Comb Sort": combsort,
     "Heap Sort": heapsort,
     "Counting Sort": countingsort,
-    "Bucket Sort": bucketsort
+    "Bucket Sort": bucketsort,
+    "Radix Sort": radixsort
 };
 console.log(AlgorithmBook);
 

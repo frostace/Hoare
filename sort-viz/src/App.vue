@@ -17,7 +17,7 @@
             <Button
                 id="button-testcase"
                 @click="handleClickUploadTestcase"
-                iconName="sort-numeric-up-alt"
+                iconName="sort-numeric-down"
                 content="Array"
             />
             <Selector id="select" />

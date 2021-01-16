@@ -8,11 +8,11 @@ import { library } from "@fortawesome/fontawesome-svg-core";
 import {
     faPlay,
     faRedo,
-    faSortNumericUpAlt
+    faSortNumericDown
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
-library.add(faPlay, faRedo, faSortNumericUpAlt);
+library.add(faPlay, faRedo, faSortNumericDown);
 
 Vue.component("font-awesome-icon", FontAwesomeIcon);
 Vue.use(Antd);

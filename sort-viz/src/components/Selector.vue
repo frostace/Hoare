@@ -38,7 +38,8 @@ export default {
                 "Comb Sort",
                 "Heap Sort",
                 "Counting Sort",
-                "Bucket Sort"
+                "Bucket Sort",
+                "Radix Sort"
             ]
         };
     },

@@ -1,24 +1,44 @@
 const radixsort = function(nums) {
-    let animationNums = [];
-    const radixHelper = (strings, bit) => {
-        // base case
-        if (strings.length <= 1) return strings;
-        // console.log(strings);
-        // maintain an array of arrays of strings
-        let arr = new Array(10).fill(0).map(() => new Array(0));
+    // maintained for vis, flatten this arr before vis
+    let globalArr = new Array(10).fill(0).map(() => new Array(0));
 
-        for (let string of strings) {
-            arr[parseInt(string.charAt(bit))].push(string);
+    let animationNums = [];
+    const radixHelper = (strings, bit, parentArr) => {
+        // base case
+        if (strings.length <= 1 || bit >= strings[0].length) return strings;
+
+        // maintain an array of arrays of strings
+        if (bit !== 0) {
+            parentArr.splice(0, parentArr.length);
+            parentArr.push(...new Array(10).fill(0).map(() => new Array(0)));
+        }
+
+        // temporarily place all element in 11-th bucket
+        parentArr[11] = strings;
+
+        // re-allocate each element from 11-th to its correct bucket
+        for (let i = strings.length - 1; i >= 0; i -= 1) {
+            let string = strings[i];
+            parentArr[parseInt(string.charAt(bit))].push(string);
+            parentArr[11].splice(i, 1);
+            // vis
+            // TODO: how to get index of the moving element
+            animationNums.push({
+                nums: parser(globalArr.flat(3))
+            });
         }
 
         // recurse
         for (let i = 0; i < 10; i += 1) {
-            arr[i] = radixHelper(arr[i], bit + 1);
+            parentArr[i] = radixHelper(
+                parentArr[i].slice(),
+                bit + 1,
+                parentArr[i]
+            );
         }
-        // console.log("arr", arr);
 
-        // join
-        return concatenate(arr);
+        // flatten subarr
+        return parentArr.flat();
     };
 
     // find digit nums with 1 scan
@@ -30,42 +50,46 @@ const radixsort = function(nums) {
         return prefixStr + numStr;
     });
 
-    return radixHelper(strings, 0).map(numStr => {
+    parser(radixHelper(strings.slice(), 0, globalArr));
+    return animationNums;
+};
+
+const parser = strings => {
+    return strings.map(numStr => {
         // remove leading-zeros
         let i = 0;
         while (i < numStr.length && numStr[i] === "0") i += 1;
         return i === numStr.length ? 0 : parseInt(numStr.slice(i));
     });
-    return animationNums;
 };
 
-const concatenate = function(buckets) {
-    return Array.prototype.concat(
-        ...buckets.filter(bucket => bucket.length !== 0)
-    );
-};
+// const concatenate = function(buckets) {
+//     return Array.prototype.concat(
+//         ...buckets.filter(bucket => bucket.length !== 0)
+//     );
+// };
 
-console.log(
-    radixsort([
-        208,
-        250,
-        201,
-        145,
-        70,
-        185,
-        230,
-        126,
-        122,
-        47,
-        82,
-        4,
-        292,
-        7,
-        277,
-        42
-    ])
-);
-// export default radixsort;
+// console.log(
+//     radixsort([
+//         208,
+//         250,
+//         201,
+//         145,
+//         70,
+//         185,
+//         230,
+//         126,
+//         122,
+//         47,
+//         82,
+//         4,
+//         292,
+//         7,
+//         277,
+//         42
+//     ])
+// );
+export default radixsort;
 
 /*
 LSD radix sorts typically use the following sorting order: short keys come before longer keys, and then keys of the same length 
