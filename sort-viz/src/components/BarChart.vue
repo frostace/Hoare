@@ -47,7 +47,6 @@ const AlgorithmBook = {
     "Bucket Sort": bucketsort,
     "Radix Sort": radixsort
 };
-console.log(AlgorithmBook);
 
 export default {
     props: ["inputNums", "selectedAlgorithms"],
@@ -407,6 +406,7 @@ export default {
 
 <style lang="scss" scoped>
 @import "../assets/var";
+@import "../assets/presets";
 
 #canvas {
     background-color: $chart-bkg-color;
@@ -436,6 +436,7 @@ export default {
         -moz-transform: rotate(-90deg);
         -webkit-transform: rotate(-90deg);
         transform-origin: top right;
+        @include clear-select-effect;
     }
     svg {
         -webkit-display: block;
