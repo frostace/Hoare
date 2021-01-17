@@ -1,6 +1,22 @@
 <template>
     <div>
-        <a-select
+        <Select
+            mode="multiple"
+            :size="size"
+            placeholder="Please select"
+            :default-value="getSelectedAlgorithms"
+            @change="handleChange"
+            @popupScroll="popupScroll"
+        >
+            <Option
+                v-for="method in methods"
+                :key="method"
+                :disabled="algoFull && !getSelectedAlgorithms.includes(method)"
+            >
+                {{ method }}
+            </Option>
+        </Select>
+        <!-- <a-select
             id="algo-selector"
             mode="multiple"
             :size="size"
@@ -16,15 +32,24 @@
             >
                 {{ method }}
             </a-select-option>
-        </a-select>
+        </a-select> -->
     </div>
 </template>
 
 <script>
+import Vue from "vue";
 import { mapGetters, mapActions } from "vuex";
 import { algorithmCapacity } from "../assets/constants";
+import { Select } from "ant-design-vue";
+import "ant-design-vue/lib/select/style";
+const Option = Select.Option;
+Vue.use(Select);
 
 export default {
+    components: {
+        Select,
+        Option
+    },
     data() {
         return {
             size: "default",
