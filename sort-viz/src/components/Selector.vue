@@ -48,7 +48,7 @@ import { algorithmCapacity } from "../assets/constants";
 import { Select } from "ant-design-vue"; // import on demand with babel-plugin-import
 import "ant-design-vue/lib/select/style";
 import { CheckOutline, CloseOutline } from "../assets/antdIcons";
-import { Icon } from "ant-design-vue";
+import { Icon } from "ant-design-vue"; // import Icon on demand
 
 const Option = Select.Option;
 Vue.use(Select); // resolve issue: "cannot resolve directive input: ant-input"
