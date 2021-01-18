@@ -1,22 +1,25 @@
 <template>
     <div>
-        <Select
+        <!-- <Select
             mode="multiple"
             :size="size"
             placeholder="Please select"
             :default-value="getSelectedAlgorithms"
+            :removeIcon="(<CloseOutline />)"
             @change="handleChange"
             @popupScroll="popupScroll"
         >
+             <CheckOutline slot="menuItemSelectedIcon" />
+            <CloseOutline slot="removeIcon" />
             <Option
                 v-for="method in methods"
                 :key="method"
                 :disabled="algoFull && !getSelectedAlgorithms.includes(method)"
             >
-                {{ method }}
+                <div>{{ method }} <CloseOutline /></div>
             </Option>
-        </Select>
-        <!-- <a-select
+        </Select> -->
+        <a-select
             id="algo-selector"
             mode="multiple"
             :size="size"
@@ -25,6 +28,8 @@
             @change="handleChange"
             @popupScroll="popupScroll"
         >
+            <Icon slot="removeIcon" type="close" />
+            <Icon slot="menuItemSelectedIcon" type="check" />
             <a-select-option
                 v-for="method in methods"
                 :key="method"
@@ -32,7 +37,7 @@
             >
                 {{ method }}
             </a-select-option>
-        </a-select> -->
+        </a-select>
     </div>
 </template>
 
@@ -40,15 +45,21 @@
 import Vue from "vue";
 import { mapGetters, mapActions } from "vuex";
 import { algorithmCapacity } from "../assets/constants";
-import { Select } from "ant-design-vue";
+import { Select } from "ant-design-vue"; // import on demand with babel-plugin-import
 import "ant-design-vue/lib/select/style";
+import { CheckOutline, CloseOutline } from "../assets/antdIcons";
+import { Icon } from "ant-design-vue";
+
 const Option = Select.Option;
-Vue.use(Select);
+Vue.use(Select); // resolve issue: "cannot resolve directive input: ant-input"
+console.log(Select, Option);
+console.log(CloseOutline);
 
 export default {
     components: {
-        Select,
-        Option
+        // Select,
+        // Option,
+        Icon
     },
     data() {
         return {
@@ -82,6 +93,13 @@ export default {
         },
         popupScroll() {
             console.log("popupScroll");
+        },
+        getIcon(iconName) {
+            return iconName === "CloseOutline" ? (
+                <CloseOutline />
+            ) : (
+                <CheckOutline />
+            );
         }
     }
 };

@@ -30,7 +30,6 @@
 
 <script>
 import * as d3 from "d3";
-// import _ from "lodash";
 import quicksort from "../algos/quicksort";
 import mergesort from "../algos/mergesort";
 import insertionsort from "../algos/insertionsort";
