@@ -34,7 +34,11 @@ const getters = {
 
 const actions = {
     resetInitNums({ commit }) {
-        commit("updateInitNums");
+        commit("updateInitNums", genRandomArray(state.arrayLength, 50));
+    },
+    refillInitNums({ commit }, newArr) {
+        console.log("refilling");
+        commit("updateInitNums", newArr);
     },
     makeChartBusy({ commit }) {
         commit("updateChartBusy");
@@ -60,8 +64,8 @@ const actions = {
 };
 
 const mutations = {
-    updateInitNums: state => {
-        state.initNums = genRandomArray(state.arrayLength, 50);
+    updateInitNums: (state, newArr) => {
+        state.initNums = newArr;
         state.initNumsMax = Math.max(...state.initNums);
         state.chartIsBusy = false;
     },

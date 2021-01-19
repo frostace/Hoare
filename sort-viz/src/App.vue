@@ -16,7 +16,7 @@
             />
             <Button
                 id="button-testcase"
-                @click="handleClickUploadTestcase"
+                @click="() => (modalVisible = true)"
                 iconName="sort-numeric-down"
                 content="Array"
             />
@@ -39,24 +39,38 @@
             :selectedAlgorithms="getSelectedAlgorithms"
             ref="barChart"
         />
+        <Modal
+            v-model="modalVisible"
+            title="Upload Custom Testcase"
+            centered
+            @ok="() => (modalVisible = false)"
+        >
+            <Uploader />
+        </Modal>
     </div>
 </template>
 
 <script>
+import Vue from "vue";
 import BarChart from "./components/BarChart.vue";
 import Button from "./components/Button";
 import RangeSlider from "./components/RangeSlider";
 import Selector from "./components/Selector";
+import Uploader from "./components/Uploader";
+import { Modal } from "ant-design-vue";
 import { mapGetters, mapActions } from "vuex";
 import * as d3 from "d3";
 
+Vue.use(Modal);
 export default {
     name: "App",
     components: {
         BarChart,
         Button,
         RangeSlider,
-        Selector
+        Selector,
+        Uploader,
+        Modal
     },
     created() {
         document.title = "Hoare";
@@ -68,7 +82,9 @@ export default {
         "getSelectedAlgorithms"
     ]),
     data() {
-        return {};
+        return {
+            modalVisible: false
+        };
     },
     watch: {
         getChartBusy(newValue) {

@@ -70,14 +70,18 @@ export default {
         "getAnimationDuration",
         "getSelectedAlgorithms"
     ]),
-    // watch: {
-    //     nums: {
-    //         immediate: true,
-    //         handler: function(newNums, oldNums) {
-    //             console.log("watcher triggered", newNums, oldNums);
-    //         }
-    //     }
-    // },
+    watch: {
+        getInitNums: {
+            immediate: true,
+            handler: function(newNums) {
+                this.resetAllCharts();
+                this.renderChart(newNums, null, "#algo0");
+                this.renderChart(newNums, null, "#algo1");
+                this.renderChart(newNums, null, "#algo2");
+                // console.log("watcher triggered", newNums, oldNums);
+            }
+        }
+    },
     mounted() {
         // init all charts
         this.renderChart(this.getInitNums, null, "#algo0");

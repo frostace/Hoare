@@ -1,25 +1,24 @@
 <template>
     <div>
-        <!-- <Select
+        <Select
             mode="multiple"
             :size="size"
             placeholder="Please select"
             :default-value="getSelectedAlgorithms"
-            :removeIcon="(<CloseOutline />)"
             @change="handleChange"
             @popupScroll="popupScroll"
         >
-             <CheckOutline slot="menuItemSelectedIcon" />
-            <CloseOutline slot="removeIcon" />
+            <Icon slot="menuItemSelectedIcon" type="check" />
+            <Icon slot="removeIcon" type="close" />
             <Option
                 v-for="method in methods"
                 :key="method"
                 :disabled="algoFull && !getSelectedAlgorithms.includes(method)"
             >
-                <div>{{ method }} <CloseOutline /></div>
+                <div>{{ method }}</div>
             </Option>
-        </Select> -->
-        <a-select
+        </Select>
+        <!-- <a-select
             id="algo-selector"
             mode="multiple"
             :size="size"
@@ -37,7 +36,7 @@
             >
                 {{ method }}
             </a-select-option>
-        </a-select>
+        </a-select> -->
     </div>
 </template>
 
@@ -47,18 +46,16 @@ import { mapGetters, mapActions } from "vuex";
 import { algorithmCapacity } from "../assets/constants";
 import { Select } from "ant-design-vue"; // import on demand with babel-plugin-import
 import "ant-design-vue/lib/select/style";
-import { CheckOutline, CloseOutline } from "../assets/antdIcons";
+// import { CheckOutline, CloseOutline } from "../assets/antdIcons";
 import { Icon } from "ant-design-vue"; // import Icon on demand
 
 const Option = Select.Option;
 Vue.use(Select); // resolve issue: "cannot resolve directive input: ant-input"
-console.log(Select, Option);
-console.log(CloseOutline);
 
 export default {
     components: {
-        // Select,
-        // Option,
+        Select,
+        Option,
         Icon
     },
     data() {
