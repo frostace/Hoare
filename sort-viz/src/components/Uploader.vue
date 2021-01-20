@@ -1,11 +1,18 @@
 <template>
     <div>
+        <TextArea
+            class="ant-textarea"
+            placeholder="input your array here"
+            allow-clear
+            @change="handleChangeTextarea"
+            v-model="localInputNumsStr"
+        />
         <Dragger
             name="file"
             :multiple="true"
             accept=".txt"
             action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-            @change="handleChange"
+            @change="handleChangeDragger"
         >
             <p class="ant-upload-drag-icon">
                 <font-awesome-icon icon="inbox" />
@@ -22,20 +29,27 @@
 
 <script>
 import Vue from "vue";
-import { mapActions } from "vuex";
-import { Upload } from "ant-design-vue"; // import on demand with babel-plugin-import
+import { mapGetters, mapActions } from "vuex";
+import { Upload, Input } from "ant-design-vue"; // import on demand with babel-plugin-import
 const { Dragger } = Upload;
+const { TextArea } = Input;
 import "ant-design-vue/lib/upload/style";
-
+import debounce from "lodash/debounce"; // import lodash on demand
 Vue.use(Upload); // resolve issue: "cannot resolve directive input: ant-input"
 
 export default {
     components: {
-        Dragger
+        Dragger,
+        TextArea
+    },
+    data() {
+        return {
+            localInputNumsStr: ""
+        };
     },
     methods: {
-        ...mapActions(["refillInitNums"]),
-        handleChange(info) {
+        ...mapActions(["refillInitNums", "varyInputNums"]),
+        handleChangeDragger(info) {
             const status = info.file.status;
             if (status !== "uploading") {
                 console.log(`${info.file.name} file is uploading...`);
@@ -45,13 +59,47 @@ export default {
                 let reader = new FileReader();
                 reader.onload = e => {
                     console.log(e.target.result);
-                    this.refillInitNums(JSON.parse(e.target.result));
+                    this.localInputNumsStr = e.target.result;
+                    this.handleChangeTextarea();
+                    // this.refillInitNums(JSON.parse(e.target.result));
                 };
-                // TODO: restrict array length
-                // TODO: verify JSON parse
+
+                // refill init nums after clicking on OK
                 reader.readAsText(info.file.originFileObj);
             } else if (status === "error") {
                 console.log(`${info.file.name} file upload failed.`);
+            }
+        },
+        handleChangeTextarea: debounce(function() {
+            // pass localInputNumsStr to state.inputNums
+            let nums = this.verifiedInputNums(this.localInputNumsStr);
+            // invalid JSON parse and limit arr length
+            if (nums.length < 8 || nums.length > 100) {
+                console.log("invalid input");
+                return;
+            }
+            this.varyInputNums(nums);
+        }, 200),
+        verifiedInputNums(inputNumsStr) {
+            // remove redundant comma
+            // remove trailing comma
+            let results = [];
+            let entries = inputNumsStr.match(/\d+/g);
+            if (entries === null) return results;
+            entries.forEach(function(x) {
+                results.push(parseInt(x));
+            });
+            return results;
+        }
+    },
+    computed: {
+        ...mapGetters(["getInitNums"])
+    },
+    watch: {
+        getInitNums: {
+            immediate: true,
+            handler: function(newNums) {
+                this.localInputNumsStr = newNums.toString();
             }
         }
     }
@@ -61,5 +109,9 @@ export default {
 <style lang="scss" scoped>
 .ant-upload-drag-icon {
     font-size: 40pt;
+}
+
+.ant-textarea {
+    margin-bottom: 20px;
 }
 </style>

@@ -43,7 +43,7 @@
             v-model="modalVisible"
             title="Upload Custom Testcase"
             centered
-            @ok="() => (modalVisible = false)"
+            @ok="handleOk"
         >
             <Uploader />
         </Modal>
@@ -78,6 +78,7 @@ export default {
     },
     computed: mapGetters([
         "getInitNums",
+        "getInputNums",
         "getChartBusy",
         "getSelectedAlgorithms"
     ]),
@@ -100,6 +101,7 @@ export default {
     methods: {
         ...mapActions([
             "resetInitNums",
+            "refillInitNums",
             "makeChartBusy",
             "varyArrayLength",
             "varyAnimationDuration"
@@ -123,6 +125,12 @@ export default {
             if (evt.target.id === "animationDuration") {
                 this.varyAnimationDuration(evt.target.value);
             }
+        },
+        handleOk() {
+            this.modalVisible = false;
+            // TODO: fill init nums with input nums
+            console.log("input nums:", this.getInputNums);
+            this.refillInitNums(this.getInputNums);
         }
     }
 };

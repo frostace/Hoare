@@ -90,13 +90,6 @@ export default {
         },
         popupScroll() {
             console.log("popupScroll");
-        },
-        getIcon(iconName) {
-            return iconName === "CloseOutline" ? (
-                <CloseOutline />
-            ) : (
-                <CheckOutline />
-            );
         }
     }
 };

@@ -14,6 +14,7 @@ var genRandomArray = (length, max) =>
 const state = {
     initNums: [],
     initNumsMax: 0, // maintain a fixed maximum value of nums so that merge sort won't change domain range dynamically
+    inputNums: [],
     animationDuration: 80, // default
     arrayLength: 50, // default
     chartIsBusy: false,
@@ -26,6 +27,7 @@ const state = {
 const getters = {
     getInitNums: state => state.initNums,
     getInitNumsMax: state => state.initNumsMax,
+    getInputNums: state => state.inputNums,
     getChartBusy: state => state.chartIsBusy,
     getArrayLength: state => state.arrayLength,
     getAnimationDuration: state => state.animationDuration,
@@ -39,6 +41,9 @@ const actions = {
     refillInitNums({ commit }, newArr) {
         console.log("refilling");
         commit("updateInitNums", newArr);
+    },
+    varyInputNums({ commit }, newArr) {
+        commit("updateInputNums", newArr);
     },
     makeChartBusy({ commit }) {
         commit("updateChartBusy");
@@ -68,6 +73,9 @@ const mutations = {
         state.initNums = newArr;
         state.initNumsMax = Math.max(...state.initNums);
         state.chartIsBusy = false;
+    },
+    updateInputNums: (state, newArr) => {
+        state.inputNums = newArr;
     },
     updateChartBusy: state => {
         state.chartIsBusy = true;
