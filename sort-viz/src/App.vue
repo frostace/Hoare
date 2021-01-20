@@ -58,6 +58,7 @@ import RangeSlider from "./components/RangeSlider";
 import Selector from "./components/Selector";
 import Uploader from "./components/Uploader";
 import { Modal } from "ant-design-vue";
+import "ant-design-vue/lib/modal/style";
 import { mapGetters, mapActions } from "vuex";
 import * as d3 from "d3";
 
@@ -128,8 +129,8 @@ export default {
         },
         handleOk() {
             this.modalVisible = false;
-            // TODO: fill init nums with input nums
-            console.log("input nums:", this.getInputNums);
+            if (this.getInputNums.length === 0) return;
+            this.varyArrayLength(this.getInputNums.length / 2);
             this.refillInitNums(this.getInputNums);
         }
     }
@@ -161,6 +162,12 @@ body {
     align-items: center;
     padding: 0 60px;
     margin-top: 60px;
+}
+
+.ant-btn-primary {
+    span {
+        color: white;
+    }
 }
 
 /* default is desktop: */

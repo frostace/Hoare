@@ -16,7 +16,7 @@ const state = {
     initNumsMax: 0, // maintain a fixed maximum value of nums so that merge sort won't change domain range dynamically
     inputNums: [],
     animationDuration: 80, // default
-    arrayLength: 50, // default
+    arrayLength: 54, // default
     chartIsBusy: false,
     algo0Finished: false,
     algo1Finished: false,
@@ -48,8 +48,8 @@ const actions = {
     makeChartBusy({ commit }) {
         commit("updateChartBusy");
     },
-    varyArrayLength({ commit }, newLength) {
-        commit("updateArrayLength", newLength);
+    varyArrayLength({ commit }, newSliderVal) {
+        commit("updateArrayLength", newSliderVal);
     },
     varyAnimationDuration({ commit }, newDuration) {
         commit("updateAnimationDuration", newDuration);
@@ -83,8 +83,8 @@ const mutations = {
         state.algo1Finished = false;
         state.algo2Finished = false;
     },
-    updateArrayLength: (state, newLength) => {
-        state.arrayLength = newLength * 2;
+    updateArrayLength: (state, newSliderVal) => {
+        state.arrayLength = newSliderVal * 2;
         // default length = 25 * 2 = 50;
     },
     updateAnimationDuration: (state, newDuration) => {

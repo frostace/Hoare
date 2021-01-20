@@ -14,32 +14,46 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
 export default {
     props: {
         content: {
             type: String,
-            default: "",
+            default: ""
         },
         sliderID: {
             type: String,
-            default: "vol",
-        },
+            default: "vol"
+        }
     },
     data() {
         return {
-            currentValue: 25,
+            currentValue: 27
         };
+    },
+    computed: {
+        ...mapGetters(["getArrayLength"])
+    },
+    watch: {
+        getArrayLength: {
+            immediate: true,
+            handler: function(newLen) {
+                if (this.sliderID !== "arrayLength") return;
+                this.currentValue = newLen / 2; // map from arr len to slider val
+            }
+        }
     },
     methods: {
         handleChange(evt) {
             this.$emit("change", evt);
-        },
-    },
+        }
+    }
 };
 </script>
 
 <style lang="scss">
 @import "../assets/var";
+@import "../assets/presets";
 
 .slider-container {
     display: flex;
@@ -51,6 +65,7 @@ span {
     margin: 0 10px;
     color: $--content-font-color;
     font-size: 16px;
+    @include clear-select-effect;
 }
 .slider {
     -webkit-appearance: none;

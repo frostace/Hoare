@@ -13,8 +13,8 @@
                 'is-loading': loading,
                 'is-plain': plain,
                 'is-round': round,
-                'is-circle': circle,
-            },
+                'is-circle': circle
+            }
         ]"
     >
         <font-awesome-icon :icon="iconName" />
@@ -32,29 +32,29 @@ export default {
     name: "dc-button",
     inject: {
         elForm: {
-            default: "",
+            default: ""
         },
         elFormItem: {
-            default: "",
-        },
+            default: ""
+        }
     },
     props: {
         type: {
             type: String,
-            default: "default",
+            default: "default"
         },
         content: {
             type: String,
-            default: "button",
+            default: "button"
         },
         size: String,
         icon: {
             type: String,
-            default: "",
+            default: ""
         },
         nativeType: {
             type: String,
-            default: "button",
+            default: "button"
         },
         loading: Boolean,
         disabled: Boolean,
@@ -62,7 +62,7 @@ export default {
         autofocus: Boolean,
         round: Boolean,
         circle: Boolean,
-        iconName: String,
+        iconName: String
     },
     computed: {
         _elFormItemSize() {
@@ -75,19 +75,20 @@ export default {
         },
         buttonDisabled() {
             return this.disabled || (this.elForm || {}).disabled;
-        },
+        }
     },
     methods: {
         handleClick(evt) {
             this.$emit("click", evt);
-        },
-    },
+        }
+    }
 };
 </script>
 
 <style lang="scss" scoped>
 @charset "UTF-8";
 @import "../assets/var";
+@import "../assets/presets";
 
 .dc-button {
     display: inline-block;
@@ -108,6 +109,9 @@ export default {
     font-weight: 550;
     border-radius: 20px;
     transition: 0.1s;
+    span {
+        @include clear-select-effect;
+    }
 
     &:hover {
         background-color: lighten($--slider-gray, 10%);
@@ -115,6 +119,9 @@ export default {
     &:active {
         background-color: $--decent-blue;
         color: white;
+        span {
+            color: white;
+        }
     }
 }
 

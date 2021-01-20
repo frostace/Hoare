@@ -6,7 +6,6 @@
             placeholder="Please select"
             :default-value="getSelectedAlgorithms"
             @change="handleChange"
-            @popupScroll="popupScroll"
         >
             <Icon slot="menuItemSelectedIcon" type="check" />
             <Icon slot="removeIcon" type="close" />
@@ -87,10 +86,10 @@ export default {
         handleChange(value) {
             console.log(`Selected: ${value}`);
             this.varyAlgorithms(value);
-        },
-        popupScroll() {
-            console.log("popupScroll");
         }
+        // popupScroll() {
+        //     console.log("popupScroll");
+        // }
     }
 };
 </script>

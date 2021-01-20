@@ -30,10 +30,12 @@
 <script>
 import Vue from "vue";
 import { mapGetters, mapActions } from "vuex";
-import { Upload, Input } from "ant-design-vue"; // import on demand with babel-plugin-import
+import { Upload, Input, message } from "ant-design-vue"; // import on demand with babel-plugin-import
 const { Dragger } = Upload;
 const { TextArea } = Input;
 import "ant-design-vue/lib/upload/style";
+import "ant-design-vue/lib/input/style";
+import "ant-design-vue/lib/message/style";
 import debounce from "lodash/debounce"; // import lodash on demand
 Vue.use(Upload); // resolve issue: "cannot resolve directive input: ant-input"
 
@@ -73,11 +75,21 @@ export default {
         handleChangeTextarea: debounce(function() {
             // pass localInputNumsStr to state.inputNums
             let nums = this.verifiedInputNums(this.localInputNumsStr);
-            // invalid JSON parse and limit arr length
-            if (nums.length < 8 || nums.length > 100) {
-                console.log("invalid input");
+            // invalid JSON parse or empty arr
+            if (nums.length === 0) {
+                message.error("Invalid Input or Empty Array!", 1);
                 return;
             }
+            // limit arr length
+            if (nums.length < 8) {
+                message.error("Array Length should be >= 8!", 1);
+                return;
+            }
+            if (nums.length > 100) {
+                message.error("Array Length should be <= 100!", 1);
+                return;
+            }
+            // now that nums is valid
             this.varyInputNums(nums);
         }, 200),
         verifiedInputNums(inputNumsStr) {
