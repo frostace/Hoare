@@ -39,30 +39,24 @@
             :selectedAlgorithms="getSelectedAlgorithms"
             ref="barChart"
         />
-        <Modal
+        <ModalComponent
             v-model="modalVisible"
-            title="Upload Custom Testcase"
-            centered
-            @ok="handleOk"
-        >
-            <Uploader />
-        </Modal>
+            :close="handleModalCancel"
+            @ok="handleModalOk"
+            @cancel="handleModalCancel"
+        />
     </div>
 </template>
 
 <script>
-import Vue from "vue";
 import BarChart from "./components/BarChart.vue";
 import Button from "./components/Button";
 import RangeSlider from "./components/RangeSlider";
 import Selector from "./components/Selector";
-import Uploader from "./components/Uploader";
-import { Modal } from "ant-design-vue";
-import "ant-design-vue/lib/modal/style";
+import ModalComponent from "./components/ModalComponent";
 import { mapGetters, mapActions } from "vuex";
 import * as d3 from "d3";
 
-Vue.use(Modal);
 export default {
     name: "App",
     components: {
@@ -70,8 +64,7 @@ export default {
         Button,
         RangeSlider,
         Selector,
-        Uploader,
-        Modal
+        ModalComponent
     },
     created() {
         document.title = "Hoare";
@@ -127,11 +120,14 @@ export default {
                 this.varyAnimationDuration(evt.target.value);
             }
         },
-        handleOk() {
+        handleModalOk() {
             this.modalVisible = false;
             if (this.getInputNums.length === 0) return;
             this.varyArrayLength(this.getInputNums.length / 2);
             this.refillInitNums(this.getInputNums);
+        },
+        handleModalCancel() {
+            this.modalVisible = false;
         }
     }
 };
