@@ -53,7 +53,8 @@ import BarChart from "./components/BarChart.vue";
 import Button from "./components/Button";
 import RangeSlider from "./components/RangeSlider";
 import Selector from "./components/Selector";
-import ModalComponent from "./components/ModalComponent";
+// import ModalComponent from "./components/ModalComponent";
+const ModalComponent = () => import("./components/ModalComponent");
 import { mapGetters, mapActions } from "vuex";
 import * as d3 from "d3";
 
